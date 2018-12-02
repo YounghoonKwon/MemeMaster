@@ -7,25 +7,28 @@
 </head>
 
 <body>
-    <h1>MemeMaster</h1>
+    <h1>
+        <a href="index.html">MemeMaster</a>
+    </h1>
+
+    <button id="sign_up">Sign Up</button>
 
     <br />
 
     <div>
-        <h3>Sign Up</h3>
+        <h3>Sign In</h3>
 
         <form>
             <label>Email:</label>
-            <input id="new_email" type="text" />
+            <input id="user_email" type="text" />
 
             <br />
 
             <label>Password:</label>
-            <input id="new_password" type="password" />
+            <input id="user_pass" type="password" />
         </form>
 
-        <button id="create_account">Create Account</button>
-
+        <button id="login">Log In</button>
     </div>
 </body>
 </html>
@@ -47,10 +50,17 @@
 <script src="signup.js"></script>
 
 <script type="text/javascript">
-    document.getElementById("create_account").onclick = function () {
-        email = document.getElementById("new_email").value;
-        password = document.getElementById("new_password").value;
-        newAccount(email, password);
-        window.location = "login.html";
+    document.getElementById("login").onclick = function () {
+        email = document.getElementById("user_email").value;
+        password = document.getElementById("user_pass").value;
+        login(email, password);
     }
 </script>
+
+<script type="text/javascript">
+    document.getElementById("sign_up").onclick = function () {
+        window.location = "signup.html"
+    }
+</script>
+
+<script>getUser();</script>
