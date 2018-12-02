@@ -11,21 +11,7 @@
         <a href="index.html">MemeMaster</a>
     </h1>
 
-    <br />
-
-    <div>
-        <h3>Sign In</h3>
-
-        <form>
-            <label>Username:</label>
-            <input type="text" />
-
-            <br />
-
-            <label>Password:</label>
-            <input type="password" />
-        </form>
-    </div>
+    <button id="logout">Log Out</button>
 </body>
 </html>
 
@@ -41,4 +27,12 @@
         messagingSenderId: "828897432315"
     };
     firebase.initializeApp(config);
+</script>
+
+<script src="signup.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("logout").onclick = function () {
+        logout();
+    }
 </script>

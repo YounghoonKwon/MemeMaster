@@ -4,14 +4,38 @@ function newAccount(email, password) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
         // ...
     });
 }
 
-window.addEventListener("load", function () {
-    document.getElementById("create_account").addEventListener("click", function () {
-        email = document.getElementById("new_email").value;
-        password = document.getElementById("new_password").value;
-        newAccount(email, password);
+function login(email, password) {
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        // ...
     });
-});
+}
+
+function logout() {
+    firebase.auth().signOut().then(function () {
+        // Sign-out successful.
+    }).catch(function (error) {
+        // An error happened.
+        });
+
+    window.location = "login.html"
+}
+
+function getUser() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            window.location = "read.html";
+        } else {
+            //window.location = "login.html";
+        }
+    });
+}
