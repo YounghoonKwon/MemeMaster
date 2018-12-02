@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>MemeMaster</title>
+</head>
+
+<body>
+    <h1>MemeMaster</h1>
+
+    <br />
+
+    <div>
+        <h3>Sign Up</h3>
+
+        <form>
+            <label>Email:</label>
+            <input id="new_email" type="text" />
+
+            <br />
+
+            <label>Password:</label>
+            <input id="new_password" type="password" />
+        </form>
+
+        <button id="create_account">Create Account</button>
+
+    </div>
+</body>
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCdi5c7M5eVOWShwCXOIjxQcweE_flzrZQ",
+        authDomain: "cse-134b-final-project.firebaseapp.com",
+        databaseURL: "https://cse-134b-final-project.firebaseio.com",
+        projectId: "cse-134b-final-project",
+        storageBucket: "cse-134b-final-project.appspot.com",
+        messagingSenderId: "828897432315"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<script src="signup.js"></script>
