@@ -13,14 +13,27 @@
     
     <canvas id="memeCanvas" width="300" height="300" style="border:1px solid"></canvas>
     <img id="img1" style="display: none" src="defaultimage.png" />
+
     <div id="memeText">
+    	<input type="file" id="imageLoader" name="imageLoader"/>
+    	<br>
     	Top: <input type="text" id="topText"><br>
   		Bottom: <input type="text" id="bottomText"><br>
+  		Font Family:<select id="fontFamily">
+  		  <option value="Impact">Impact</option>
+		  <option value="Times New Roman">Times New Roman</option>
+		  <option value="Times">Times</option>
+		  <option value="Arial">Arial</option>
+		  <option value="serif">serif</option>
+		  <option value="sans-serif">sans-serif</option>
+		  <option value="Helvetica">Helvetica</option>
+		</select><br>
+		Font Size: <input type="text" id="fontSize"><br>
   		<button onclick="applyMeme()">apply</button>	
     </div>
-    <br>
-    <input type="file" id="imageLoader" name="imageLoader"/>
+    <button onclick="saveMeme()">save</button>	
 	<img id='output'>
+	<br>
     <button id="logout">Log Out</button>
 </body>
 </html>
@@ -44,13 +57,20 @@
     }
 </script>
 <script type="text/javascript">
-	function showCanvas(topText="hello", bottomText="haha", img=document.getElementById("img1")) {
+	function showCanvas(topText="Write Down", bottomText="Your Text", img=document.getElementById("img1"), fontSize=30, fontFamily="Impact") {
 	    var canvas = document.getElementById("memeCanvas");
 	    var ctx = canvas.getContext("2d");
 	    ctx.drawImage(img, 0, 0, 300, 300);
-	    ctx.font = "30px Arial";
-		ctx.fillText(topText,0,50);
-		ctx.fillText(bottomText,0,270);
+	    var font = fontSize + "px " + fontFamily;
+	    console.log(font);
+	    ctx.font = font;
+	    ctx.fillStyle = "white";
+	    ctx.strokeStyle = "black";
+	    ctx.textAlign="center";
+		ctx.fillText(topText,150,50);
+		ctx.fillText(bottomText,150,270);
+		ctx.strokeText(topText,150,50);
+		ctx.strokeText(bottomText,150,270);
 	};
 	showCanvas();
 </script>
@@ -80,6 +100,27 @@
 	function applyMeme(){
 		var topText = document.getElementById("topText").value;
 		var bottomText = document.getElementById("bottomText").value;
-		showCanvas(topText, bottomText, document.getElementById("img1"));
+		var fontSize = document.getElementById("fontSize").value;
+		var fontFamily = document.getElementById("fontFamily").value;
+		showCanvas(topText, bottomText, document.getElementById("img1"), fontSize, fontFamily);
 	};	
+	function saveMeme(){
+		var topText = document.getElementById("topText").value;
+		var bottomText = document.getElementById("bottomText").value;
+		var fontSize = document.getElementById("fontSize").value;
+		var fontFamily = document.getElementById("fontFamily").value;
+		var imgSrc = document.getElementById("img1").src;
+		var meme = {
+			topText: topText,
+			bottomText: bottomText,
+			fontSize: fontSize,
+			fontFamily: fontFamily,
+			imgSrc: imgSrc
+		};
+		var database = firebase.database();
+		var user = firebase.auth().currentUser;
+		var ref = database.ref(user.uid);
+		ref.push(meme);
+		alert("saved!");
+	}
 </script>
