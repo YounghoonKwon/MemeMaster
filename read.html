@@ -12,6 +12,8 @@
     </h1>
 
     <button id="logout">Log Out</button>
+    <ul id="memeList">
+    </ul>
     <button id="createMeme">Create Meme</button>
 </body>
 </html>
@@ -41,4 +43,32 @@
     document.getElementById("createMeme").onclick = function () {
         window.location = "createMeme.html"
     }
+</script>
+<script type="text/javascript">
+    var database = firebase.database();
+    var userToken;
+    firebase.auth().onAuthStateChanged(function(user){
+        if(user){
+            userToken = user.uid;
+        }
+        else{
+            console.log("no user");
+        }
+    });
+    var ref = database.ref(userToken);
+    // ref.on('value', gotData, errData);
+    // function gotData(data){
+    //     var memes = data.val();
+    //     // var keys = Object.keys(memes[0]);
+    //     // var k = keys[0];
+    //     for (var key in data.val()){
+    //         console.log(key);
+    //         console.log(key[]);
+    //     }
+        
+
+    // }
+    // function errData(err){
+    //     console.log("Error!"+err);
+    // }
 </script>
