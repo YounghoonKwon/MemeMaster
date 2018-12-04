@@ -85,24 +85,29 @@
                     else if(item == "imgSrc"){
                         meme.imgSrc = data.val()[key1][key2][item];
                     }
+
                 }
-                // var li = document.createElement("li");
-                // li.innerHTML = `${meme.bottomText} ${meme.topText} ${meme.fontSize} ${meme.fontFamily} ${meme.imgSrc}`;
-                // document.getElementById("memeList").appendChild(li);
-                showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc);
+                meme.id = key2;
+                showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
             }
         }
     }
     function errData(err){
         console.log("Error!"+err);
     }
-    function showMemeList(bottomText, topText, fontSize, fontFamily, image){
+
+    function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId){
+        
+        appendMeme(bottomText, topText, fontSize, fontFamily, image);
+        appendButtons(memeId);
+
+    }
+    function appendMeme(bottomText, topText, fontSize, fontFamily, image){
         var canvas = document.createElement("canvas");
+        canvas.id = "meme";
         canvas.width = 300;
         canvas.height = 300;
         canvas.style = "border:1px solid";
-        var br = document.createElement("br");
-        canvas.id = "meme";
         var ctx = canvas.getContext("2d");
         var img = new Image();
         img.onload = function(){
@@ -117,6 +122,26 @@
         }
         img.src = image;
         document.getElementById("memeList").appendChild(canvas);
+    }
+
+    function appendButtons(memeId){
+        var br = document.createElement("br");
+        var editButton = document.createElement("button");
+        var deleteButton = document.createElement("button");
+        editButton.innerHTML = "edit";
+        deleteButton.innerHTML = "delete";
+
+        editButton.onclick = function(){
+            console.log(memeId);
+            console.log("edit");
+        }        
+        deleteButton.onclick = function(){
+            console.log(memeId);
+            console.log("delete");
+        }        
+        document.getElementById("memeList").appendChild(editButton);
+        document.getElementById("memeList").appendChild(deleteButton);
         document.getElementById("memeList").appendChild(br);
     }
+    
 </script>
