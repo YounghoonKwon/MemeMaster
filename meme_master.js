@@ -107,20 +107,20 @@ function canvasData(data) {
     var counter = 1;
     for (var key2 in data.val()[UID]) {
         console.log(key2);
+        console.log(counter);
+        console.log(index);
         if (counter == index) {
-            var topText = data.val()[UID][key2]["topText"];
-            var bottomText = data.val()[UID][key2]["bottomText"];
-            var img = data.val()[UID][key2]["imgSrc"];
-            var fontSize = data.val()[UID][key2]["fontSize"];
-            var fontFamily = data.val()[UID][key2]["fontFamily"];
-
-            var currImg = document.getElementById("img1");
-            currImg.src = img;
-            console.log(counter);
-            console.log(index);
-            showCanvas(topText, bottomText, currImg, fontSize, fontFamily);
+            document.getElementById("topText").value = data.val()[UID][key2]["topText"];
+            document.getElementById("bottomText").value = data.val()[UID][key2]["bottomText"];
+            document.getElementById("fontSize").value = data.val()[UID][key2]["fontSize"];
+            document.getElementById("fontFamily").value = data.val()[UID][key2]["fontFamily"];
+            document.getElementById("img1").src = data.val()[UID][key2]["imgSrc"];
+            window.setTimeout(applyChanges, 1);
+            //applyChanges();
             break;
         }
+        counter++;
+
     }
 }
 
@@ -141,9 +141,6 @@ function showCanvas(topText = "Add Text", bottomText = "Here", img = document.ge
     ctx.fillText(bottomText, 150, 270);
     ctx.strokeText(topText, 150, 50);
     ctx.strokeText(bottomText, 150, 270);
-
-    document.getElementById("topText").value = topText;
-    document.getElementById("bottomText").value = bottomText;
 };
 
 function handleImage(e) {
@@ -178,7 +175,7 @@ function saveMeme() {
     var fontFamily = document.getElementById("fontFamily").value;
     var imgSrc = document.getElementById("img1").src;
 
-    showCanvas(topText, bottomText, imgSrc, fontSize, fontFamily);
+    applyChanges();
 
     var memeSrc = document.getElementById("memeCanvas").toDataURL();
 
