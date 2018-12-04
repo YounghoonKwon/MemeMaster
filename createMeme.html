@@ -11,15 +11,34 @@
         <a href="read.html">MemeMaster</a>
     </h1>
 
+    <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
+    <button id="user_account">My Account</button>
+
+    <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
+    <button id="logout">Log Out</button>
+
+    <br />
+
     <canvas id="memeCanvas" width="300" height="300" style="border:1px solid"></canvas>
     <img id="img1" style="display: none" src="defaultimage.png" />
 
-    <div id="memeText">
+    <div>
         <input type="file" id="imageLoader" name="imageLoader" />
-        <br>
-        Top: <input type="text" id="topText"><br>
-        Bottom: <input type="text" id="bottomText"><br>
-        Font Family:<select id="fontFamily">
+
+        <br />
+
+        <label>Top:</label>
+        <input type="text" id="topText" value="Add Text">
+
+        <br />
+
+        <label>Bottom:</label>
+        <input type="text" id="bottomText" value="Here">
+
+        <br />
+
+        <label>Font Family:</label>
+        <select id="fontFamily">
             <option value="Impact">Impact</option>
             <option value="Times New Roman">Times New Roman</option>
             <option value="Times">Times</option>
@@ -27,14 +46,16 @@
             <option value="serif">serif</option>
             <option value="sans-serif">sans-serif</option>
             <option value="Helvetica">Helvetica</option>
-        </select><br>
-        Font Size: <input type="text" id="fontSize"><br>
-        <button onclick="applyMeme()">apply</button>
+        </select>
+
+        <br />
+        <label>Font Size:</label>
+        <input type="text" id="fontSize"><br>
     </div>
-    <button onclick="saveMeme()">save</button>
-    <img id='output'>
-    <br>
-    <button id="logout">Log Out</button>
+
+    <button id="apply">Apply Changes</button>
+    <button id="save">Save Meme</button>
+    <!--<img id='output'>-->
 </body>
 </html>
 
@@ -53,76 +74,44 @@
     firebase.initializeApp(config);
 </script>
 
+<!-- Link the external JavaScript file-->
+<script src="meme_master.js"></script>
+
+<!-- JavaScript code for My Account button's onclick function-->
+<script type="text/javascript">
+    document.getElementById("user_account").onclick = function () {
+        window.location = "account.html"
+    }
+</script>
+
 <!-- JavaScript code for log out button's onclick function-->
 <script type="text/javascript">
     document.getElementById("logout").onclick = function () {
         logout();
     }
 </script>
+
+<!-- JavaScript code for the add file button's onclick function-->
 <script type="text/javascript">
-    function showCanvas(topText = "Write Down", bottomText = "Your Text", img = document.getElementById("img1"), fontSize = 30, fontFamily = "Impact") {
-        var canvas = document.getElementById("memeCanvas");
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, 300, 300);
-        var font = fontSize + "px " + fontFamily;
-        ctx.font = font;
-        ctx.fillStyle = "white";
-        ctx.strokeStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText(topText, 150, 50);
-        ctx.fillText(bottomText, 150, 270);
-        ctx.strokeText(topText, 150, 50);
-        ctx.strokeText(bottomText, 150, 270);
-    };
-    showCanvas();
+    var newImage = document.getElementById("imageLoader");
+    newImage.addEventListener("change", handleImage, false);
 </script>
-<script>
-    var imageLoader = document.getElementById('imageLoader');
-    imageLoader.addEventListener('change', handleImage, false);
-    var canvas = document.getElementById('memeCanvas');
-    var ctx = canvas.getContext('2d');
 
+<!-- JavaScript code for the apply button's onclick function-->
+<script type="text/javascript">
+    document.getElementById("apply").onclick = function () {
+        applyChanges();
+    }
+</script>
 
-    function handleImage(e) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var img = new Image();
-            img.onload = function () {
-                ctx.drawImage(img, 0, 0, 300, 300);
-                var topText = document.getElementById("topText").value;
-                var bottomText = document.getElementById("bottomText").value;
-                ctx.fillText(topText, 0, 50);
-                ctx.fillText(bottomText, 0, 270);
-            }
-            img.src = event.target.result;
-            document.getElementById("img1").src = img.src;
-        }
-        reader.readAsDataURL(e.target.files[0]);
+<!-- JavaScript code for the save button's onclick function-->
+<script type="text/javascript">
+    document.getElementById("save").onclick = function () {
+        saveMeme();
     }
-    function applyMeme() {
-        var topText = document.getElementById("topText").value;
-        var bottomText = document.getElementById("bottomText").value;
-        var fontSize = document.getElementById("fontSize").value;
-        var fontFamily = document.getElementById("fontFamily").value;
-        showCanvas(topText, bottomText, document.getElementById("img1"), fontSize, fontFamily);
-    };
-    function saveMeme() {
-        var topText = document.getElementById("topText").value;
-        var bottomText = document.getElementById("bottomText").value;
-        var fontSize = document.getElementById("fontSize").value;
-        var fontFamily = document.getElementById("fontFamily").value;
-        var imgSrc = document.getElementById("img1").src;
-        var meme = {
-            topText: topText,
-            bottomText: bottomText,
-            fontSize: fontSize,
-            fontFamily: fontFamily,
-            imgSrc: imgSrc
-        };
-        var database = firebase.database();
-        var user = firebase.auth().currentUser;
-        var ref = database.ref(user.uid);
-        ref.push(meme);
-        alert("saved!");
-    }
+</script>
+
+<!-- JavaScript code for loading the initial canvas -->
+<script type="text/javascript">
+    showCanvas();
 </script>

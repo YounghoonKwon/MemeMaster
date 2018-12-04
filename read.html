@@ -11,15 +11,20 @@
         <a href="read.html">MemeMaster</a>
     </h1>
 
+    <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
     <button id="user_account">My Account</button>
+
+    <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
     <button id="logout">Log Out</button>
 
     <ul id="memeList"></ul>
 
-    <button id="createMeme">Create Meme</button>
+    <!-- When the Add Meme button is pressed, the user is redirected to the meme editing page -->
+    <button id="addMeme">Add Meme</button>
 </body>
 </html>
 
+<!-- The script for Firebase -->
 <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
 <script>
     // Initialize Firebase
@@ -34,136 +39,121 @@
     firebase.initializeApp(config);
 </script>
 
-<script src="signup.js"></script>
+<!-- Link the external JavaScript file -->
+<script src="meme_master.js"></script>
 
-<!-- JavaScript code for My Account button's onclick function-->
+<!-- JavaScript code for My Account button's onclick function -->
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
         window.location = "account.html"
     }
 </script>
 
-<!-- JavaScript code for log out button's onclick function-->
+<!-- JavaScript code for log out button's onclick function -->
 <script type="text/javascript">
     document.getElementById("logout").onclick = function () {
         logout();
     }
 </script>
 
-<!-- JavaScript code for Create Meme button's onclick function-->
+<!-- JavaScript code for Create Meme button's onclick function -->
 <script type="text/javascript">
-    document.getElementById("createMeme").onclick = function () {
+    document.getElementById("addMeme").onclick = function () {
         window.location = "createMeme.html"
     }
 </script>
 
+<!-- JavaScript code for showing all of the user's saved memes -->
 <script type="text/javascript">
-    var database = firebase.database();
     var userToken;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             userToken = user.uid;
         }
         else {
-            console.log("no user");
+            console.log("No user");
+            window.location = "login.html";
         }
     });
-    var ref = database.ref(userToken);
+
+    var ref = firebase.database().ref(userToken);
     ref.on('value', gotData, errData);
-    function gotData(data) {
-        // var keys = Object.keys(memes[0]);
-        for (var key1 in data.val()) {
-            for (var key2 in data.val()[key1]) {
-                var meme = {
-                    topText: "",
-                    bottomText: "",
-                    fontSize: "",
-                    fontFamily: "",
-                    imgSrc: ""
-                };
-                for (var item in data.val()[key1][key2]) {
-                    if (item == "bottomText") {
-                        meme.bottomText = data.val()[key1][key2][item];
-                    }
-                    else if (item == "topText") {
-                        meme.topText = data.val()[key1][key2][item];
-                    }
-                    else if (item == "fontSize") {
-                        meme.fontSize = data.val()[key1][key2][item];
-                    }
-                    else if (item == "fontFamily") {
-                        meme.fontFamily = data.val()[key1][key2][item];
-                    }
-                    else if (item == "imgSrc") {
-                        meme.imgSrc = data.val()[key1][key2][item];
-                    }
+</script>
 
+
+
+
+
+
+<script>
+/*
+        var ref = database.ref(userToken);
+        ref.on('value', gotData, errData);
+        function gotData(data) {
+            // var keys = Object.keys(memes[0]);
+            for (var key1 in data.val()) {
+                for (var key2 in data.val()[key1]) {
+                    var meme = {
+                        topText: "",
+                        bottomText: "",
+                        fontSize: "",
+                        fontFamily: "",
+                        imgSrc: ""
+                    };
+                    for (var item in data.val()[key1][key2]) {
+                        if (item == "bottomText") {
+                            meme.bottomText = data.val()[key1][key2][item];
+                        }
+                        else if (item == "topText") {
+                            meme.topText = data.val()[key1][key2][item];
+                        }
+                        else if (item == "fontSize") {
+                            meme.fontSize = data.val()[key1][key2][item];
+                        }
+                        else if (item == "fontFamily") {
+                            meme.fontFamily = data.val()[key1][key2][item];
+                        }
+                        else if (item == "imgSrc") {
+                            meme.imgSrc = data.val()[key1][key2][item];
+                        }
+
+                    }
+                    meme.id = key2;
+                    //console.log(meme.imgSrc);
+                    showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
                 }
-                meme.id = key2;
-                //console.log(meme.imgSrc);
-                showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
             }
+        });
+
+        function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
+
+            appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
+            appendButtons(memeId);
+
         }
-    }
-    function errData(err) {
-        console.log("Error!" + err);
-    }
 
-    function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
-
-        appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
-        appendButtons(memeId);
-
-    }
-    function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
-        var div = document.createElement("div");
-        var canvas = document.createElement("canvas");
-        div.id = memeId;
-        canvas.width = 300;
-        canvas.height = 300;
-        canvas.style = "border:1px solid";
-        var ctx = canvas.getContext("2d");
-        var img = new Image();
-        img.onload = function () {
-            ctx.drawImage(img, 0, 0, 300, 300);
-            var font = fontSize + "px " + fontFamily;
-            ctx.font = font;
-            ctx.fillStyle = "white";
-            ctx.strokeStyle = "black";
-            ctx.textAlign = "center";
-            ctx.strokeText(topText, 150, 50);
-            ctx.strokeText(bottomText, 150, 270);
+        function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
+            var div = document.createElement("div");
+            var canvas = document.createElement("canvas");
+            div.id = memeId;
+            canvas.width = 300;
+            canvas.height = 300;
+            canvas.style = "border:1px solid";
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 300, 300);
+                var font = fontSize + "px " + fontFamily;
+                ctx.font = font;
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                ctx.textAlign = "center";
+                ctx.strokeText(topText, 150, 50);
+                ctx.strokeText(bottomText, 150, 270);
+            }
+            img.src = image;
+            document.getElementById("memeList").appendChild(div);
+            document.getElementById(memeId).appendChild(canvas);
         }
-        img.src = image;
-        document.getElementById("memeList").appendChild(div);
-        document.getElementById(memeId).appendChild(canvas);
-    }
-
-    function appendButtons(memeId) {
-        var br = document.createElement("br");
-        var editButton = document.createElement("button");
-        var deleteButton = document.createElement("button");
-        editButton.innerHTML = "edit";
-        deleteButton.innerHTML = "delete";
-
-        editButton.onclick = function editMeme() {
-            console.log(memeId);
-            console.log("edit");
-            // var canvas = document.getElementById(memeId);
-            // var ctx = canvas.getContext("2d");
-            // var inputTag = document.createElement("input");
-            // inputTag.innerHTML= "haha";
-            // canvas.appendChild(inputTag);
-            // I was working on here, we have to either render a new page or append input tag and save button directly next to the canvas under the div
-        }
-        deleteButton.onclick = function () {
-            console.log(memeId);
-            console.log("delete");
-            // write firebase delete function, refresh all page.
-        }
-        document.getElementById(memeId).appendChild(editButton);
-        document.getElementById(memeId).appendChild(deleteButton);
-        document.getElementById(memeId).appendChild(br);
-    }
-
+*/
 </script>
