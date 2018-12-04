@@ -23,19 +23,29 @@ function login(email, password) {
 function logout() {
     firebase.auth().signOut().then(function () {
         // Sign-out successful.
+        window.location = "login.html"
     }).catch(function (error) {
         // An error happened.
         });
-
-    window.location = "login.html"
 }
 
-function getUser() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
+function changePassword(oldPass, newPass) {
+    var user = firebase.auth().currentUser;
+    var credential = firebase.auth.EmailAuthProvider.credential(user.email, oldPass);
+
+    user.reauthenticateAndRetrieveDataWithCredential(credential).then(function () {
+        // User re-authenticated.
+        user.updatePassword(newPass).then(function () {
+            // Update successful.
+            console.log(newPass);
+            alert("Password changed successfully!");
             window.location = "read.html";
-        } else {
-            //window.location = "login.html";
-        }
+        }).catch(function (error) {
+            // An error happened.
+            console.log(error);
+        });
+    }).catch(function (error) {
+        // An error happened.
+        alert(error);
     });
 }

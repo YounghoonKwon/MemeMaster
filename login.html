@@ -72,4 +72,12 @@
 </script>
 
 <!-- Set an observer on the Auth object to get the user information from Firebase -->
-<script>getUser();</script>
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            window.location = "read.html";
+        } else {
+            //window.location = "login.html";
+        }
+    });
+</script>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,25 +8,94 @@
 
 <body>
     <h1>
-        <a href="index.html">MemeMaster</a>
+        <a href="read.html">MemeMaster</a>
     </h1>
+
+    <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
+    <button id="user_account">My Account</button>
+
+    <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
+    <button id="logout">Log Out</button>
 
     <br />
 
     <div>
         <h3>My Account</h3>
 
-        <label>Username:</label>
-        <span id="username"><b><i>Input Username Here Later</i></b></span>
+        <!-- Displays the user's email associated with their account -->
+        <label>Email:</label>
+        <span id="user_email"></span>
 
         <br />
 
+        <!-- Form for taking in the user's old and new password -->
         <form>
-            <label>Password:</label>
-            <input type="password" />
-            <button>Change Password</button>
+            <label>Old Password:</label>
+            <input type="password" id="re_enter" />
+
+            <br />
+
+            <label>New Password:</label>
+            <input type="password" id="new_pass" />
         </form>
 
+        <!-- When the Change Password button is pressed, a password update is attempted -->
+        <button id="change_pass">Change Password</button>
     </div>
+
 </body>
 </html>
+
+<!-- Set an observer on the Auth object to get the user information from Firebase -->
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCdi5c7M5eVOWShwCXOIjxQcweE_flzrZQ",
+        authDomain: "cse-134b-final-project.firebaseapp.com",
+        databaseURL: "https://cse-134b-final-project.firebaseio.com",
+        projectId: "cse-134b-final-project",
+        storageBucket: "cse-134b-final-project.appspot.com",
+        messagingSenderId: "828897432315"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<!-- Link the external JavaScript file-->
+<script src="signup.js"></script>
+
+<!-- JavaScript code for My Account button's onclick function-->
+<script type="text/javascript">
+    document.getElementById("user_account").onclick = function () {
+        window.location = "account.html"
+    }
+</script>
+
+<!-- JavaScript code for log out button's onclick function-->
+<script type="text/javascript">
+    document.getElementById("logout").onclick = function () {
+        //logout();
+    }
+</script>
+
+<!-- JavaScript code for Change Password button's onclick function-->
+<script type="text/javascript">
+    document.getElementById("change_pass").onclick = function () {
+        var oldPassword = document.getElementById("re_enter").value;
+        var newPassword = document.getElementById("new_pass").value;
+        changePassword(oldPassword, newPassword);
+    }
+</script>
+
+<!-- Set an observer on the Auth object to get the user information from Firebase -->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            document.getElementById("user_email").innerHTML = `${user.email}`;
+        }
+        else {
+            alert("No User!");
+            window.location = login.html;
+        }
+    });
+</script>
