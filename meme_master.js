@@ -71,11 +71,8 @@ function appendButtons(memeId) {
         console.log(memeId);
         console.log("delete");
 
-        var user = firebase.auth().currentUser;
-        var ref = firebase.database().ref(user.uid);
-
+        document.getElementById("confirm_delete").open = true;
         sessionStorage.setItem("index", memeId.toString());
-        ref.once('value', deleteMeme, errData);
 
         // write firebase delete function, refresh all page.
     }
@@ -249,8 +246,8 @@ function deleteMeme(data) {
                     alert(error);
                 }
                 else {
-                    //alert("Meme Deleted!");
-                    //window.location = "read.html";
+                    alert("Meme Deleted!");
+                    window.location = "read.html";
                 }
             });
             break;

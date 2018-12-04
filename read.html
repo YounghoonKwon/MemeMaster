@@ -21,6 +21,15 @@
 
     <!-- When the Add Meme button is pressed, the user is redirected to the meme editing page -->
     <button id="addMeme">Add Meme</button>
+
+    <dialog id="confirm_delete">
+        Are you sure you want to delete this meme?
+        <content>
+            <br />
+            <button id="ok_delete">OK</button>
+            <button id="cancel_delete">Cancel</button>
+        </content>
+    </dialog>
 </body>
 </html>
 
@@ -45,7 +54,7 @@
 <!-- JavaScript code for My Account button's onclick function -->
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
-        window.location = "account.html"
+        window.location = "account.html";
     }
 </script>
 
@@ -60,7 +69,24 @@
 <script type="text/javascript">
     document.getElementById("addMeme").onclick = function () {
         sessionStorage.setItem("index", "-1");
-        window.location = "createMeme.html"
+        window.location = "createMeme.html";
+    }
+</script>
+
+<!-- JavaScript code for Create Meme button's onclick function -->
+<script type="text/javascript">
+    document.getElementById("ok_delete").onclick = function () {
+        var user = firebase.auth().currentUser;
+        var ref = firebase.database().ref(user.uid);
+
+        ref.once('value', deleteMeme, errData);
+    }
+</script>
+
+<!-- JavaScript code for Create Meme button's onclick function -->
+<script type="text/javascript">
+    document.getElementById("cancel_delete").onclick = function () {
+        document.getElementById("confirm_delete").open = false;
     }
 </script>
 
@@ -88,73 +114,73 @@
 
 <script>
 /*
-        var ref = database.ref(userToken);
-        ref.on('value', gotData, errData);
-        function gotData(data) {
-            // var keys = Object.keys(memes[0]);
-            for (var key1 in data.val()) {
-                for (var key2 in data.val()[key1]) {
-                    var meme = {
-                        topText: "",
-                        bottomText: "",
-                        fontSize: "",
-                        fontFamily: "",
-                        imgSrc: ""
-                    };
-                    for (var item in data.val()[key1][key2]) {
-                        if (item == "bottomText") {
-                            meme.bottomText = data.val()[key1][key2][item];
-                        }
-                        else if (item == "topText") {
-                            meme.topText = data.val()[key1][key2][item];
-                        }
-                        else if (item == "fontSize") {
-                            meme.fontSize = data.val()[key1][key2][item];
-                        }
-                        else if (item == "fontFamily") {
-                            meme.fontFamily = data.val()[key1][key2][item];
-                        }
-                        else if (item == "imgSrc") {
-                            meme.imgSrc = data.val()[key1][key2][item];
-                        }
+                var ref = database.ref(userToken);
+                ref.on('value', gotData, errData);
+                function gotData(data) {
+                    // var keys = Object.keys(memes[0]);
+                    for (var key1 in data.val()) {
+                        for (var key2 in data.val()[key1]) {
+                            var meme = {
+                                topText: "",
+                                bottomText: "",
+                                fontSize: "",
+                                fontFamily: "",
+                                imgSrc: ""
+                            };
+                            for (var item in data.val()[key1][key2]) {
+                                if (item == "bottomText") {
+                                    meme.bottomText = data.val()[key1][key2][item];
+                                }
+                                else if (item == "topText") {
+                                    meme.topText = data.val()[key1][key2][item];
+                                }
+                                else if (item == "fontSize") {
+                                    meme.fontSize = data.val()[key1][key2][item];
+                                }
+                                else if (item == "fontFamily") {
+                                    meme.fontFamily = data.val()[key1][key2][item];
+                                }
+                                else if (item == "imgSrc") {
+                                    meme.imgSrc = data.val()[key1][key2][item];
+                                }
 
+                            }
+                            meme.id = key2;
+                            //console.log(meme.imgSrc);
+                            showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
+                        }
                     }
-                    meme.id = key2;
-                    //console.log(meme.imgSrc);
-                    showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
+                });
+
+                function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
+
+                    appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
+                    appendButtons(memeId);
+
                 }
-            }
-        });
 
-        function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
-
-            appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
-            appendButtons(memeId);
-
-        }
-
-        function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
-            var div = document.createElement("div");
-            var canvas = document.createElement("canvas");
-            div.id = memeId;
-            canvas.width = 300;
-            canvas.height = 300;
-            canvas.style = "border:1px solid";
-            var ctx = canvas.getContext("2d");
-            var img = new Image();
-            img.onload = function () {
-                ctx.drawImage(img, 0, 0, 300, 300);
-                var font = fontSize + "px " + fontFamily;
-                ctx.font = font;
-                ctx.fillStyle = "white";
-                ctx.strokeStyle = "black";
-                ctx.textAlign = "center";
-                ctx.strokeText(topText, 150, 50);
-                ctx.strokeText(bottomText, 150, 270);
-            }
-            img.src = image;
-            document.getElementById("memeList").appendChild(div);
-            document.getElementById(memeId).appendChild(canvas);
-        }
+                function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
+                    var div = document.createElement("div");
+                    var canvas = document.createElement("canvas");
+                    div.id = memeId;
+                    canvas.width = 300;
+                    canvas.height = 300;
+                    canvas.style = "border:1px solid";
+                    var ctx = canvas.getContext("2d");
+                    var img = new Image();
+                    img.onload = function () {
+                        ctx.drawImage(img, 0, 0, 300, 300);
+                        var font = fontSize + "px " + fontFamily;
+                        ctx.font = font;
+                        ctx.fillStyle = "white";
+                        ctx.strokeStyle = "black";
+                        ctx.textAlign = "center";
+                        ctx.strokeText(topText, 150, 50);
+                        ctx.strokeText(bottomText, 150, 270);
+                    }
+                    img.src = image;
+                    document.getElementById("memeList").appendChild(div);
+                    document.getElementById(memeId).appendChild(canvas);
+                }
 */
 </script>
