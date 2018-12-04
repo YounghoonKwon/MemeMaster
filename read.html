@@ -14,6 +14,7 @@
     <button id="logout">Log Out</button>
     <ul id="memeList">
     </ul>
+
     <button id="createMeme">Create Meme</button>
 </body>
 </html>
@@ -85,18 +86,37 @@
                         meme.imgSrc = data.val()[key1][key2][item];
                     }
                 }
-                // for(var i = 0; i < data.val()[key1].length; i++){
-                //     console.log
-                    var li = document.createElement("li");
-                    li.innerHTML = `${meme.bottomText} ${meme.topText} ${meme.fontSize} ${meme.fontFamily} ${meme.imgSrc}`;
-                    document.getElementById("memeList").appendChild(li);
-                // }
-
-                // document.getElementById("memeList").innerHTML += "<li>'+{meme.topText}+'</li>";
+                // var li = document.createElement("li");
+                // li.innerHTML = `${meme.bottomText} ${meme.topText} ${meme.fontSize} ${meme.fontFamily} ${meme.imgSrc}`;
+                // document.getElementById("memeList").appendChild(li);
+                showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc);
             }
         }
     }
     function errData(err){
         console.log("Error!"+err);
+    }
+    function showMemeList(bottomText, topText, fontSize, fontFamily, image){
+        var canvas = document.createElement("canvas");
+        canvas.width = 300;
+        canvas.height = 300;
+        canvas.style = "border:1px solid";
+        var br = document.createElement("br");
+        canvas.id = "meme";
+        var ctx = canvas.getContext("2d");
+        var img = new Image();
+        img.onload = function(){
+            ctx.drawImage(img, 0, 0, 300, 300);
+            var font = fontSize + "px " + fontFamily;
+        ctx.font = font;
+        ctx.fillStyle = "white";
+        ctx.strokeStyle = "black";
+        ctx.textAlign="center";
+        ctx.strokeText(topText,150,50);
+        ctx.strokeText(bottomText,150,270);
+        }
+        img.src = image;
+        document.getElementById("memeList").appendChild(canvas);
+        document.getElementById("memeList").appendChild(br);
     }
 </script>
