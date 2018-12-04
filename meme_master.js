@@ -31,10 +31,11 @@ function logout() {
 
 function gotData(data) {
     var counter = 1;
-    for (var key2 in data.val()[userToken]) {
+    var UID = firebase.auth().currentUser.uid;
+    for (var key2 in data.val()[UID]) {
         var li = document.createElement("li");
         var img = document.createElement("img");
-        img.src = data.val()[userToken][key2]["memeSrc"];
+        img.src = data.val()[UID][key2]["memeSrc"];
         li.appendChild(img);
         li.id = counter;
         document.getElementById("memeList").appendChild(li);
@@ -48,18 +49,17 @@ function errData(err) {
 }
 
 function appendButtons(memeId) {
-    var br = document.createElement("br");
     var editButton = document.createElement("button");
     var deleteButton = document.createElement("button");
     editButton.innerHTML = "Edit";
     deleteButton.innerHTML = "Delete";
 
-    editButton.onclick = function editMeme() {
+    editButton.onclick = function () {
         console.log(memeId);
         console.log("edit");
 
+        sessionStorage.setItem("index", memeId.toString());
         window.location = "createMeme.html";
-        showCanvas("HI");
         // var canvas = document.getElementById(memeId);
         // var ctx = canvas.getContext("2d");
         // var inputTag = document.createElement("input");
@@ -74,13 +74,61 @@ function appendButtons(memeId) {
     }
     document.getElementById(memeId).appendChild(editButton);
     document.getElementById(memeId).appendChild(deleteButton);
-    document.getElementById(memeId).appendChild(br);
+}
+
+function initCanvas() {
+    var index = sessionStorage.getItem("index");
+    if (index == "-1") {
+        showCanvas();
+    }
+    else {
+        var userToken;
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                userToken = user.uid;
+            }
+            else {
+                console.log("No user");
+                window.location = "login.html";
+            }
+        });
+
+        console.log(userToken);
+        var ref = firebase.database().ref(userToken);
+        ref.on('value', canvasData, errData);
+    }
+}
+
+function canvasData(data) {
+    var index = sessionStorage.getItem("index");
+    index = parseInt(index);
+
+    var UID = firebase.auth().currentUser.uid;
+    var counter = 1;
+    for (var key2 in data.val()[UID]) {
+        console.log(key2);
+        if (counter == index) {
+            var topText = data.val()[UID][key2]["topText"];
+            var bottomText = data.val()[UID][key2]["bottomText"];
+            var img = data.val()[UID][key2]["imgSrc"];
+            var fontSize = data.val()[UID][key2]["fontSize"];
+            var fontFamily = data.val()[UID][key2]["fontFamily"];
+
+            var currImg = document.getElementById("img1");
+            currImg.src = img;
+            console.log(counter);
+            console.log(index);
+            showCanvas(topText, bottomText, currImg, fontSize, fontFamily);
+            break;
+        }
+    }
 }
 
 function showCanvas(topText = "Add Text", bottomText = "Here", img = document.getElementById("img1"),
-                    fontSize = 30, fontFamily = "Impact") {
+    fontSize = 30, fontFamily = "Impact") {
     var canvas = document.getElementById("memeCanvas");
     var ctx = canvas.getContext("2d");
+
     ctx.drawImage(img, 0, 0, 300, 300);
 
     var font = fontSize + "px " + fontFamily;
@@ -93,6 +141,9 @@ function showCanvas(topText = "Add Text", bottomText = "Here", img = document.ge
     ctx.fillText(bottomText, 150, 270);
     ctx.strokeText(topText, 150, 50);
     ctx.strokeText(bottomText, 150, 270);
+
+    document.getElementById("topText").value = topText;
+    document.getElementById("bottomText").value = bottomText;
 };
 
 function handleImage(e) {
@@ -126,6 +177,9 @@ function saveMeme() {
     var fontSize = document.getElementById("fontSize").value;
     var fontFamily = document.getElementById("fontFamily").value;
     var imgSrc = document.getElementById("img1").src;
+
+    showCanvas(topText, bottomText, imgSrc, fontSize, fontFamily);
+
     var memeSrc = document.getElementById("memeCanvas").toDataURL();
 
     var meme = {

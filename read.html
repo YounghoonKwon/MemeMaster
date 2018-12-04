@@ -59,6 +59,7 @@
 <!-- JavaScript code for Create Meme button's onclick function -->
 <script type="text/javascript">
     document.getElementById("addMeme").onclick = function () {
+        sessionStorage.setItem("index", "-1");
         window.location = "createMeme.html"
     }
 </script>
