@@ -191,15 +191,46 @@ function saveMeme() {
     var database = firebase.database();
     var user = firebase.auth().currentUser;
     var ref = database.ref(user.uid);
-    ref.push(meme, function (error) {
-        if (error) {
-            alert(error);
+
+    var index = parseInt(sessionStorage.getItem("index"));
+    if (index == -1) {
+        ref.push(meme, function (error) {
+            if (error) {
+                alert(error);
+            }
+            else {
+                alert("Meme Saved!");
+                window.location = "read.html";
+            }
+        });
+    }
+    else {
+        ref.on('value', updateMeme, errData);
+    }
+
+}
+
+function updateMeme(data) {
+    var index = sessionStorage.getItem("index");
+    index = parseInt(index);
+
+    var UID = firebase.auth().currentUser.uid;
+    var counter = 1;
+    for (var key2 in data.val()[UID]) {
+        if (counter == index) {
+            ref.child(key2).update(meme, function (error) {
+                if (error) {
+                    alert(error);
+                }
+                else {
+                    alert("Meme Saved!");
+                    //window.location = "read.html";
+                }
+            });
+            break;
         }
-        else {
-            alert("Meme Saved!");
-            window.location = "read.html";
-        }
-    });
+        counter++;
+    }
 }
 
 function changePassword(oldPass, newPass) {
