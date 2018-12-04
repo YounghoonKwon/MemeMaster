@@ -99,13 +99,14 @@
 
     function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId){
         
-        appendMeme(bottomText, topText, fontSize, fontFamily, image);
+        appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
         appendButtons(memeId);
 
     }
-    function appendMeme(bottomText, topText, fontSize, fontFamily, image){
+    function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId){
+        var div = document.createElement("div");
         var canvas = document.createElement("canvas");
-        canvas.id = "meme";
+        div.id = memeId;
         canvas.width = 300;
         canvas.height = 300;
         canvas.style = "border:1px solid";
@@ -122,7 +123,8 @@
         ctx.strokeText(bottomText,150,270);
         }
         img.src = image;
-        document.getElementById("memeList").appendChild(canvas);
+        document.getElementById("memeList").appendChild(div);
+        document.getElementById(memeId).appendChild(canvas);
     }
 
     function appendButtons(memeId){
@@ -132,17 +134,24 @@
         editButton.innerHTML = "edit";
         deleteButton.innerHTML = "delete";
 
-        editButton.onclick = function(){
+        editButton.onclick = function editMeme(){
             console.log(memeId);
             console.log("edit");
+            // var canvas = document.getElementById(memeId);
+            // var ctx = canvas.getContext("2d");
+            // var inputTag = document.createElement("input");
+            // inputTag.innerHTML= "haha";
+            // canvas.appendChild(inputTag);
+            // I was working on here, we have to either render a new page or append input tag and save button directly next to the canvas under the div
         }        
         deleteButton.onclick = function(){
             console.log(memeId);
             console.log("delete");
+            // write firebase delete function, refresh all page.
         }        
-        document.getElementById("memeList").appendChild(editButton);
-        document.getElementById("memeList").appendChild(deleteButton);
-        document.getElementById("memeList").appendChild(br);
+        document.getElementById(memeId).appendChild(editButton);
+        document.getElementById(memeId).appendChild(deleteButton);
+        document.getElementById(memeId).appendChild(br);
     }
     
 </script>
