@@ -78,7 +78,7 @@
     });
 
     var ref = firebase.database().ref(userToken);
-    ref.on('value', gotData, errData);
+    ref.once('value', gotData, errData);
 </script>
 
 

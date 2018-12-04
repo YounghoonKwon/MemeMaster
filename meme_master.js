@@ -70,6 +70,13 @@ function appendButtons(memeId) {
     deleteButton.onclick = function () {
         console.log(memeId);
         console.log("delete");
+
+        var user = firebase.auth().currentUser;
+        var ref = firebase.database().ref(user.uid);
+
+        sessionStorage.setItem("index", memeId.toString());
+        ref.once('value', deleteMeme, errData);
+
         // write firebase delete function, refresh all page.
     }
     document.getElementById(memeId).appendChild(editButton);
@@ -93,7 +100,6 @@ function initCanvas() {
             }
         });
 
-        console.log(userToken);
         var ref = firebase.database().ref(userToken);
         ref.on('value', canvasData, errData);
     }
@@ -106,9 +112,6 @@ function canvasData(data) {
     var UID = firebase.auth().currentUser.uid;
     var counter = 1;
     for (var key2 in data.val()[UID]) {
-        console.log(key2);
-        console.log(counter);
-        console.log(index);
         if (counter == index) {
             document.getElementById("topText").value = data.val()[UID][key2]["topText"];
             document.getElementById("bottomText").value = data.val()[UID][key2]["bottomText"];
@@ -192,8 +195,7 @@ function saveMeme() {
     var user = firebase.auth().currentUser;
     var ref = database.ref(user.uid);
 
-    var index = parseInt(sessionStorage.getItem("index"));
-    if (index == -1) {
+    if (sessionStorage.getItem("index") == "-1") {
         ref.push(meme, function (error) {
             if (error) {
                 alert(error);
@@ -205,25 +207,49 @@ function saveMeme() {
         });
     }
     else {
-        ref.on('value', updateMeme, errData);
+        ref.once('value', function (data) { updateMeme(meme,data); }, errData);
     }
 
 }
 
-function updateMeme(data) {
+function updateMeme(meme, data) {
     var index = sessionStorage.getItem("index");
     index = parseInt(index);
 
-    var UID = firebase.auth().currentUser.uid;
     var counter = 1;
-    for (var key2 in data.val()[UID]) {
+    for (var key2 in data.val()) {
         if (counter == index) {
-            ref.child(key2).update(meme, function (error) {
+            var user = firebase.auth().currentUser;
+            firebase.database().ref(user.uid).child(key2).update(meme, function (error) {
                 if (error) {
                     alert(error);
                 }
                 else {
+                    console.log("whyyyy");
                     alert("Meme Saved!");
+                    window.location = "read.html";
+                }
+            });
+            break;
+        }
+        counter++;
+    }
+}
+
+function deleteMeme(data) {
+    var index = sessionStorage.getItem("index");
+    index = parseInt(index);
+
+    var counter = 1;
+    for (var key2 in data.val()) {
+        if (counter == index) {
+            var user = firebase.auth().currentUser;
+            firebase.database().ref(user.uid).child(key2).remove(function(error) {
+                if (error) {
+                    alert(error);
+                }
+                else {
+                    //alert("Meme Deleted!");
                     //window.location = "read.html";
                 }
             });
