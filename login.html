@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,9 +8,10 @@
 
 <body>
     <h1>
-        <a href="index.html">MemeMaster</a>
+        <a href="login.html">MemeMaster</a>
     </h1>
 
+    <!-- When the sign up button is pressed, the user is redirected to the account creation page -->
     <button id="sign_up">Sign Up</button>
 
     <br />
@@ -18,6 +19,7 @@
     <div>
         <h3>Sign In</h3>
 
+        <!-- Form for user's login information-->
         <form>
             <label>Email:</label>
             <input id="user_email" type="text" />
@@ -28,11 +30,14 @@
             <input id="user_pass" type="password" />
         </form>
 
+        <!-- When the login button is pressed, the user is redirected to 
+             their read page if they inputted the correct login information -->
         <button id="login">Log In</button>
     </div>
 </body>
 </html>
 
+<!-- The script for Firebase -->
 <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
 <script>
     // Initialize Firebase
@@ -47,8 +52,10 @@
     firebase.initializeApp(config);
 </script>
 
-<script src="signup.js"></script>
+<!-- Link the external JavaScript file-->
+<script src="meme_master.js"></script>
 
+<!-- Check that the login information exists/is correct -->
 <script type="text/javascript">
     document.getElementById("login").onclick = function () {
         email = document.getElementById("user_email").value;
@@ -57,10 +64,20 @@
     }
 </script>
 
+<!-- JavaScript code for sign up button's onclick function-->
 <script type="text/javascript">
     document.getElementById("sign_up").onclick = function () {
         window.location = "signup.html"
     }
 </script>
 
-<script>getUser();</script>
+<!-- Set an observer on the Auth object to get the user information from Firebase -->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            window.location = "read.html";
+        } else {
+            //window.location = "login.html";
+        }
+    });
+</script>
