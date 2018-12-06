@@ -43,43 +43,43 @@ function gotData(data) {
         counter++;
     }
 }
-
 function errData(err) {
     console.log("Error!" + err);
 }
-
 function appendButtons(memeId) {
+    createDeleteButton(memeId);
+    createEditButton(memeId);
+    createDownloadButton(memeId);
+}
+function createEditButton(memeId){
     var editButton = document.createElement("button");
-    var deleteButton = document.createElement("button");
     editButton.innerHTML = "Edit";
-    deleteButton.innerHTML = "Delete";
-
     editButton.onclick = function () {
-        console.log(memeId);
-        console.log("edit");
-
         sessionStorage.setItem("index", memeId.toString());
         window.location = "createMeme.html";
-        // var canvas = document.getElementById(memeId);
-        // var ctx = canvas.getContext("2d");
-        // var inputTag = document.createElement("input");
-        // inputTag.innerHTML= "haha";
-        // canvas.appendChild(inputTag);
-        // I was working on here, we have to either render a new page or append input tag and save button directly next to the canvas under the div
-    }
-    deleteButton.onclick = function () {
-        console.log(memeId);
-        console.log("delete");
-
-        document.getElementById("confirm_delete").open = true;
-        sessionStorage.setItem("index", memeId.toString());
-
-        // write firebase delete function, refresh all page.
     }
     document.getElementById(memeId).appendChild(editButton);
+}
+function createDeleteButton(memeId){
+    var deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
+    deleteButton.onclick = function () {
+        document.getElementById("confirm_delete").open = true;
+        sessionStorage.setItem("index", memeId.toString());
+    }
     document.getElementById(memeId).appendChild(deleteButton);
 }
-
+function createDownloadButton(memeId){
+    var downloadButton = document.createElement("a");
+    var childNodes = document.getElementById(memeId).children;
+    downloadButton.download = "myMeme-"+memeId;
+    downloadButton.href = childNodes[0].src;
+    document.getElementById(memeId).appendChild(downloadButton);
+    downloadButton.innerHTML = "Download";
+    downloadButton.onclick = function (){
+        downloadButton.click();
+    }
+}
 function initCanvas() {
     var index = sessionStorage.getItem("index");
     if (index == "-1") {
