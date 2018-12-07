@@ -3,59 +3,34 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
     <title>MemeMaster</title>
 
+    <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
 
+    <!-- Define CSS for styling specific to this page -->
     <style>
-        .container {
-            display: grid;
-            grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
-        }
-
-        h1 {
-            grid-column-start: col1-start;
-            color: #EEE;
-            text-shadow: 4px 4px 1px #300000;
-            4px 6px 1px #400000;
-            4px 8px 1px #500000; /*......and so on, until*/
-            4px 60px 5px #FF0000;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        #user_account {
-            grid-column-start: col2-start;
-            margin: auto;
-            height: 40px;
-        }
-
-        #logout {
-            grid-column-start: col3-start;
-            margin: auto;
-            width: 80px;
-            height: 40px;
-        }
-
+        /* Styling for the meme edit buttons */
         .edit_button {
             height: 30px;
             width: 30px;
-            grid-column-start: list-col2;
             margin: 10px;
         }
 
+        /* Styling for the meme delete buttons */
         .delete_button {
             height: 30px;
             width: 30px;
             margin: 10px;
         }
 
+        /* Styling for the meme download buttons */
         .down_button {
             margin: 10px;
         }
 
+        /* Styling for the meme share buttons */
         .share_button {
             background-color: white;
             border-style: none;
@@ -64,37 +39,17 @@
             font-size: medium;
             font-weight: bold;
         }
-
-        #dialog_buttons {
-            margin: 10px;
-        }
-
-        #ok_delete {
-            margin-left: 30%;
-        }
-
-        #ok_cancel {
-            margin-left: 10px;
-        }
-
-        #centerpoint {
-            top: 30%;
-            left: 35%;
-            position: absolute;
-        }
-
+        
+        /* Styling for the dialog for delete confirmation */
         dialog {
-            border-style: double;
-            border-width: 2px;
-            position: relative;
+            top: 30%;
+            left: 20px;
+            position: absolute;
             z-index: 3;
-            margin: 150px auto 0px auto;
-            width: 300px;
-            height: 100px;
-            background: #FFF;
-            color: #000;
+            padding: 30px;
         }
 
+        /* Styling to put an overlay when delete confirmation dialog pops up */
         #overlay {
             display: none;
             z-index: 2;
@@ -104,41 +59,63 @@
             height: 100%;
             top: 0px;
             left: 0px;
-            text-align: center;
+        }
 
+        /* Centers all content inside the dialog */
+        content{
+            text-align: center;
+        }
+
+        /* Puts spacing between message and buttons in dialog */
+        #dialog_buttons {
+            margin: 10px;
+        }
+
+        /* Add a gap in between the OK and Cancel buttons in dialog */
+        #cancel_delete {
+            margin-left: 35px;
+        }
     </style>
 
 </head>
 
 <body>
-    <div class="container">
+    <header>
         <h1>
+            <!-- When the logo is clicked, the user is redirected to their read page -->
             <a href="read.html">MemeMaster</a>
         </h1>
 
-        <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
-        <button id="user_account" class="blue_button">My Account</button>
+        <div class="redirect_buttons">
+            <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
+            <button id="user_account" class="blue_button">My Account</button>
 
-        <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
-        <button id="logout" class="blue_button">Log Out</button>
-    </div>
+            <!-- When the log out button is clicked, the user is logged out and redirected to the log in page -->
+            <button id="logout" class="blue_button">Log Out</button>
+        </div>
+    </header>
 
     <ul id="memeList"></ul>
 
-    <!-- When the Add Meme button is pressed, the user is redirected to the meme editing page -->
+    <!-- When the Add Meme button is clicked, the user is redirected to the meme editing page -->
     <button id="addMeme" class="blue_button">Add Meme</button>
 
     <div id="overlay"></div>
-    <div id="centerpoint">
-        <dialog id="confirm_delete">
+
+    <!-- If the user clicks a delete button, the dialog pops up confirming delete -->
+    <dialog id="confirm_delete">
+        <content>
             Are you sure you want to delete this meme?
-            <content>
-                <br />
-                <button id="ok_delete">OK</button>
-                <button id="cancel_delete">Cancel</button>
-            </content>
-        </dialog>
-    </div>
+
+            <div id="dialog_buttons">
+                <!-- When the OK button is clicked, the selected meme is deleted -->
+                <button id="ok_delete" class="blue_button">OK</button>
+
+                <!-- When the cancel button is clicked, the popup message disappears -->
+                <button id="cancel_delete" class="blue_button">Cancel</button>
+            </div>
+        </content>
+    </dialog>
 
 </body>
 </html>
@@ -164,6 +141,7 @@
 <!-- JavaScript code for My Account button's onclick function -->
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
+        //Go to the My Account page
         window.location = "account.html";
     }
 </script>
@@ -171,59 +149,71 @@
 <!-- JavaScript code for log out button's onclick function -->
 <script type="text/javascript">
     document.getElementById("logout").onclick = function () {
+        //Log the user out using Firebase's sign off function
         logout();
     }
 </script>
 
-<!-- JavaScript code for Create Meme button's onclick function -->
+<!-- JavaScript code for Add Meme button's onclick function -->
 <script type="text/javascript">
     document.getElementById("addMeme").onclick = function () {
+        //The user is adding a new meme so set the index to -1 and go to the meme editing page
         sessionStorage.setItem("index", "-1");
         window.location = "createMeme.html";
     }
 </script>
 
-<!-- JavaScript code for Create Meme button's onclick function -->
+<!-- JavaScript code for OK (delete) button's onclick function -->
 <script type="text/javascript">
     document.getElementById("ok_delete").onclick = function () {
+        //Get the user's memes from the database
         var user = firebase.auth().currentUser;
         var ref = firebase.database().ref(user.uid);
 
+        //Call deleteMeme to delete the selected meme
         ref.once('value', deleteMeme, errData);
     }
 </script>
 
-<!-- JavaScript code for Create Meme button's onclick function -->
+<!-- JavaScript code for Cancel (delete) button's onclick function -->
 <script type="text/javascript">
     document.getElementById("cancel_delete").onclick = function () {
+        //Make the dialog and overlay disappear
         document.getElementById("confirm_delete").open = false;
         document.getElementById("overlay").style.display = "none";
-
     }
 </script>
 
 <!-- JavaScript code for showing all of the user's saved memes -->
 <script type="text/javascript">
     var userToken;
+
+    //Set an observer on the Auth object to get the user information from Firebase
     firebase.auth().onAuthStateChanged(function (user) {
+
+        //If a user is logged in, get their UID
         if (user) {
             userToken = user.uid;
         }
+
+        //If no logged in user is found, redirect the user to the Log In page
         else {
             console.log("No user");
             window.location = "login.html";
         }
     });
 
+    //Get the user's memes from the database and use gotData to display the memes
     var ref = firebase.database().ref(userToken);
     ref.once('value', gotData, errData);
 </script>
+
 <script>
-// Check that service workers are registered
-if ('serviceWorker' in navigator) {
-  // Use the window load event to keep the page load performant
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js');
-  });
-}
+    // Check that service workers are registered
+    if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
 </script>

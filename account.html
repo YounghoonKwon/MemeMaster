@@ -11,31 +11,6 @@
 
     <!-- Define CSS for styling specific to this page -->
     <style>
-        /* Define the grid for the items in the header */
-        header {
-            display: grid;
-            grid-template-columns: [col1-start] 75% [col2-start] auto;
-        }
-
-        /* Define styling for the buttons in the header */
-        #redirect_buttons {
-            grid-column-start: col2-start;
-            margin: auto;
-        }
-
-        /* Align the error message to the center of the page */
-        #err_mess {
-            text-align: center;
-            margin: 10px;
-        }
-
-        /* Make the error message bold and red */
-        output {
-            font-weight: bold;
-            color: red;
-            font-size: medium;
-        }
-
         /* Set the width of the box for the Change Password form */
         #pass_form {
             width: 280px;
@@ -56,11 +31,11 @@
 <body>
     <header>
         <h1>
-            <!-- When the header is clicked, the user is redirected to their Meme page -->
+            <!-- When the logo is clicked, the user is redirected to their Meme page -->
             <a href="read.html">MemeMaster</a>
         </h1>
 
-        <div id="redirect_buttons">
+        <div class="redirect_buttons">
             <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
             <button id="user_account" class="blue_button">My Account</button>
 
@@ -72,7 +47,7 @@
     <h3> My Account</h3>
 
     <!-- If an error occurs when the user tries to change their password, the error message will be in the output element -->
-    <div id="err_mess">
+    <div class="err_spacing">
         <output id="error"></output>
     </div>
 
@@ -119,7 +94,7 @@
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
         //Go to the My Account page
-        window.location = "account.html"
+        window.location = "account.html";
     }
 </script>
 
@@ -130,6 +105,7 @@
         logout();
     }
 </script>
+
 <!-- JavaScript code for Change Password button's onclick function-->
 <script type="text/javascript">
     document.getElementById("change_pass").onclick = function () {
@@ -154,7 +130,7 @@
         //If no logged in user is found, redirect the user to the Log In page
         else {
             console.log("No User!");
-            window.location = login.html;
+            window.location = "login.html";
         }
     });
 </script>

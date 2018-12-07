@@ -24,7 +24,7 @@ function login(email, password) {
         console.log(errorCode);
 
         //If an error occurred, let the user know of the error
-        alert(errorMessage);
+        document.getElementById("error").innerHTML = errorMessage;
     });
 }
 
@@ -33,7 +33,7 @@ function login(email, password) {
 function logout() {
     firebase.auth().signOut().then(function () {
         //Redirect the user to the login page if they successfully logged out
-        window.location = "login.html"
+        window.location = "login.html";
     }).catch(function (error) {
         // If an error occurred, let the user know of the error
         alert(error);
@@ -49,8 +49,8 @@ function gotData(data) {
         var img = document.createElement("img");
         img.src = data.val()[UID][key2]["memeSrc"];
         img.className = "meme_img";
-        li.appendChild(img);
         li.id = counter;
+        li.appendChild(img);
         document.getElementById("memeList").appendChild(li);
         appendButtons(counter);
         counter++;

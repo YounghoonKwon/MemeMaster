@@ -1,3 +1,10 @@
+/* Define the grid for the items in the header */
+header {
+    display: grid;
+    grid-template-columns: [col1-start] 75% [col2-start] auto;
+    grid-column-gap: 10px;
+}
+
 /* Add some design to the MemeMaster header */
 h1 {
     grid-column-start: col1-start;
@@ -8,15 +15,30 @@ h1 {
     4px 60px 5px #FF0000;
 }
 
+/* Define styling for the buttons in the header */
+.redirect_buttons {
+    grid-column-start: col2-start;
+    margin: auto;
+}
+
+/* Align the error message to the center of the page */
+.err_spacing {
+    text-align: center;
+    margin: 10px;
+}
+
+/* Make the error message bold and red */
+output {
+    font-weight: bold;
+    color: red;
+    font-size: medium;
+}
+
 a {
     text-decoration: none;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: [col1-start] 75% [col2-start] auto;
-    grid-column-gap: 10px;
-}
+
 
 .sign_form {
     margin: auto;
