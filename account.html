@@ -3,44 +3,95 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
     <title>MemeMaster</title>
+
+    <!-- Link the external CSS file -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Define CSS for styling specific to this page -->
+    <style>
+        /* Define the grid for the items in the header */
+        header {
+            display: grid;
+            grid-template-columns: [col1-start] 75% [col2-start] auto;
+        }
+
+        /* Define styling for the buttons in the header */
+        #redirect_buttons {
+            grid-column-start: col2-start;
+            margin: auto;
+        }
+
+        /* Align the error message to the center of the page */
+        #err_mess {
+            text-align: center;
+            margin: 10px;
+        }
+
+        /* Make the error message bold and red */
+        output {
+            font-weight: bold;
+            color: red;
+            font-size: medium;
+        }
+
+        /* Set the width of the box for the Change Password form */
+        #pass_form {
+            width: 280px;
+        }
+
+        /* Set the width of the labels in the form */
+        label {
+            width: 100px;
+        }
+
+        /* Make the Change Password button right aligned */
+        #change_pass {
+            margin-left: 50%;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>
-        <a href="read.html">MemeMaster</a>
-    </h1>
+    <header>
+        <h1>
+            <!-- When the header is clicked, the user is redirected to their Meme page -->
+            <a href="read.html">MemeMaster</a>
+        </h1>
 
-    <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
-    <button id="user_account">My Account</button>
+        <div id="redirect_buttons">
+            <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
+            <button id="user_account" class="blue_button">My Account</button>
 
-    <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
-    <button id="logout">Log Out</button>
+            <!-- When the log out button is clicked, the user is logged out and redirected to the log in page -->
+            <button id="logout" class="blue_button">Log Out</button>
+        </div>
+    </header>
 
-    <br />
+    <h3> My Account</h3>
 
-    <div>
-        <h3>My Account</h3>
+    <!-- If an error occurs when the user tries to change their password, the error message will be in the output element -->
+    <div id="err_mess">
+        <output id="error"></output>
+    </div>
 
+    <div class="boxed" id="pass_form">
         <!-- Displays the user's email associated with their account -->
-        <label>Email:</label>
-        <span id="user_email"></span>
-
-        <br />
+        <label> Email:</label>
+        <span id="user_email"> </span>
 
         <!-- Form for taking in the user's old and new password -->
         <form>
             <label>Old Password:</label>
             <input type="password" id="re_enter" />
 
-            <br />
-
             <label>New Password:</label>
             <input type="password" id="new_pass" />
         </form>
 
-        <!-- When the Change Password button is pressed, a password update is attempted -->
-        <button id="change_pass">Change Password</button>
+        <!-- When the Change Password button is clicked, a password update is attempted -->
+        <button id="change_pass" class="blue_button">Change Password</button>
     </div>
 
 </body>
@@ -67,6 +118,7 @@
 <!-- JavaScript code for My Account button's onclick function-->
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
+        //Go to the My Account page
         window.location = "account.html"
     }
 </script>
@@ -74,13 +126,17 @@
 <!-- JavaScript code for log out button's onclick function-->
 <script type="text/javascript">
     document.getElementById("logout").onclick = function () {
+        //Log the user out using Firebase's sign off function
         logout();
     }
 </script>
-
 <!-- JavaScript code for Change Password button's onclick function-->
 <script type="text/javascript">
     document.getElementById("change_pass").onclick = function () {
+        //If an error message is in the output element, remove the message
+        document.getElementById("error").innerHTML = "";
+
+        //Get the old password and new password that the user inputted and use the Firebase function to change the password
         var oldPassword = document.getElementById("re_enter").value;
         var newPassword = document.getElementById("new_pass").value;
         changePassword(oldPassword, newPassword);
@@ -90,11 +146,14 @@
 <!-- Set an observer on the Auth object to get the user information from Firebase -->
 <script>
     firebase.auth().onAuthStateChanged(function (user) {
+        //If a user is logged in, display their email
         if (user) {
             document.getElementById("user_email").innerHTML = `${user.email}`;
         }
+
+        //If no logged in user is found, redirect the user to the Log In page
         else {
-            alert("No User!");
+            console.log("No User!");
             window.location = login.html;
         }
     });

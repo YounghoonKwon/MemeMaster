@@ -36,7 +36,7 @@ function logout() {
         window.location = "login.html"
     }).catch(function (error) {
         // If an error occurred, let the user know of the error
-        alert(error.message);
+        alert(error);
     });
 }
 
@@ -327,10 +327,10 @@ function changePassword(oldPass, newPass) {
             window.location = "read.html";
         }).catch(function (error) {
             // An error happened.
-            alert(error);
+            document.getElementById("error").innerHTML = error;
         });
     }).catch(function (error) {
         // An error happened.
-        alert(error);
+        document.getElementById("error").innerHTML = error;
     });
 }
