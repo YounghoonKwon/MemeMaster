@@ -159,80 +159,12 @@
     var ref = firebase.database().ref(userToken);
     ref.once('value', gotData, errData);
 </script>
-
-
-
-
-
 <script>
-/*
-                        var ref = database.ref(userToken);
-                        ref.on('value', gotData, errData);
-                        function gotData(data) {
-                            // var keys = Object.keys(memes[0]);
-                            for (var key1 in data.val()) {
-                                for (var key2 in data.val()[key1]) {
-                                    var meme = {
-                                        topText: "",
-                                        bottomText: "",
-                                        fontSize: "",
-                                        fontFamily: "",
-                                        imgSrc: ""
-                                    };
-                                    for (var item in data.val()[key1][key2]) {
-                                        if (item == "bottomText") {
-                                            meme.bottomText = data.val()[key1][key2][item];
-                                        }
-                                        else if (item == "topText") {
-                                            meme.topText = data.val()[key1][key2][item];
-                                        }
-                                        else if (item == "fontSize") {
-                                            meme.fontSize = data.val()[key1][key2][item];
-                                        }
-                                        else if (item == "fontFamily") {
-                                            meme.fontFamily = data.val()[key1][key2][item];
-                                        }
-                                        else if (item == "imgSrc") {
-                                            meme.imgSrc = data.val()[key1][key2][item];
-                                        }
-
-                                    }
-                                    meme.id = key2;
-                                    //console.log(meme.imgSrc);
-                                    showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
-                                }
-                            }
-                        });
-
-                        function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
-
-                            appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
-                            appendButtons(memeId);
-
-                        }
-
-                        function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
-                            var div = document.createElement("div");
-                            var canvas = document.createElement("canvas");
-                            div.id = memeId;
-                            canvas.width = 300;
-                            canvas.height = 300;
-                            canvas.style = "border:1px solid";
-                            var ctx = canvas.getContext("2d");
-                            var img = new Image();
-                            img.onload = function () {
-                                ctx.drawImage(img, 0, 0, 300, 300);
-                                var font = fontSize + "px " + fontFamily;
-                                ctx.font = font;
-                                ctx.fillStyle = "white";
-                                ctx.strokeStyle = "black";
-                                ctx.textAlign = "center";
-                                ctx.strokeText(topText, 150, 50);
-                                ctx.strokeText(bottomText, 150, 270);
-                            }
-                            img.src = image;
-                            document.getElementById("memeList").appendChild(div);
-                            document.getElementById(memeId).appendChild(canvas);
-                        }
-*/
+// Check that service workers are registered
+if ('serviceWorker' in navigator) {
+  // Use the window load event to keep the page load performant
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
 </script>
