@@ -1,74 +1,98 @@
-// JavaScript source code
+// Function for making a new account
+// The function newAccount uses a Firebase function to create a new account
 function newAccount(email, password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
+
+        //Print the error code in the console
         console.log(errorCode);
-        console.log(errorMessage);
-        // ...
+
+        //If an error occurred, let the user know of the error
+        alert(errorMessage);
     });
 }
 
+// Function for logging in
+// The function login uses a Firebase function to sign the user into their account
 function login(email, password) {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
+
+        //Print the error code in the console
+        console.log(errorCode);
+
+        //If an error occurred, let the user know of the error
         alert(errorMessage);
-        // ...
     });
 }
 
+// Function for logging out
+// The function logout uses a Firebase function to sign the user out of their account
 function logout() {
     firebase.auth().signOut().then(function () {
-        // Sign-out successful.
+        //Redirect the user to the login page if they successfully logged out
         window.location = "login.html"
     }).catch(function (error) {
-        // An error happened.
-        });
+        // If an error occurred, let the user know of the error
+        alert(error.message);
+    });
 }
 
+// Functions for Read Page
 function gotData(data) {
     var counter = 1;
     var UID = firebase.auth().currentUser.uid;
     for (var key2 in data.val()[UID]) {
         var li = document.createElement("li");
+        var div = document.createElement("div");
         var img = document.createElement("img");
+        div.className = "button_list";
         img.src = data.val()[UID][key2]["memeSrc"];
+        img.className = "meme_img";
         li.appendChild(img);
+        li.appendChild(div);
         li.id = counter;
         document.getElementById("memeList").appendChild(li);
         appendButtons(counter);
         counter++;
     }
 }
+
 function errData(err) {
     console.log("Error!" + err);
 }
+
 function appendButtons(memeId) {
-    createDeleteButton(memeId);
     createEditButton(memeId);
+    createDeleteButton(memeId);
     createDownloadButton(memeId);
+    createShareButton(memeId);
 }
+
 function createEditButton(memeId){
-    var editButton = document.createElement("button");
-    editButton.innerHTML = "Edit";
+    var editButton = document.createElement("img");
+    editButton.src = "edit_pencil.png";
+    editButton.className = "edit_button";
     editButton.onclick = function () {
         sessionStorage.setItem("index", memeId.toString());
         window.location = "createMeme.html";
     }
     document.getElementById(memeId).appendChild(editButton);
 }
+
 function createDeleteButton(memeId){
-    var deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "Delete";
+    var deleteButton = document.createElement("img");
+    deleteButton.src = "trash.png";
+    deleteButton.className = "delete_button";
     deleteButton.onclick = function () {
         document.getElementById("confirm_delete").open = true;
         sessionStorage.setItem("index", memeId.toString());
     }
     document.getElementById(memeId).appendChild(deleteButton);
 }
+
 function createDownloadButton(memeId){
     var downloadButton = document.createElement("a");
     var childNodes = document.getElementById(memeId).children;
@@ -76,10 +100,49 @@ function createDownloadButton(memeId){
     downloadButton.href = childNodes[0].src;
     document.getElementById(memeId).appendChild(downloadButton);
     downloadButton.innerHTML = "Download";
-    downloadButton.onclick = function (){
-        downloadButton.click();
+}
+
+function createShareButton(memeId) {
+    var shareButton = document.createElement("button");
+    shareButton.innerHTML = "Get Link"
+    shareButton.onclick = function () {
+        var text = document.getElementById(`${memeId}`).childNodes[0].src;
+
+        navigator.clipboard.writeText(text).then(function () {
+            /* clipboard successfully set */
+            alert("Link saved to clipboard!");
+        }, function () {
+            /* clipboard write failed */
+            alert("Error occurred!");
+        });
+    }
+    document.getElementById(memeId).appendChild(shareButton);
+}
+
+function deleteMeme(data) {
+    var index = sessionStorage.getItem("index");
+    index = parseInt(index);
+
+    var counter = 1;
+    for (var key2 in data.val()) {
+        if (counter == index) {
+            var user = firebase.auth().currentUser;
+            firebase.database().ref(user.uid).child(key2).remove(function(error) {
+                if (error) {
+                    alert(error);
+                }
+                else {
+                    alert("Meme Deleted!");
+                    window.location = "read.html";
+                }
+            });
+            break;
+        }
+        counter++;
     }
 }
+
+// Functions for Create Meme page (Edit page)
 function initCanvas() {
     var index = sessionStorage.getItem("index");
     if (index == "-1") {
@@ -116,7 +179,6 @@ function canvasData(data) {
             document.getElementById("fontFamily").value = data.val()[UID][key2]["fontFamily"];
             document.getElementById("img1").src = data.val()[UID][key2]["imgSrc"];
             window.setTimeout(applyChanges, 1);
-            //applyChanges();
             break;
         }
         counter++;
@@ -233,29 +295,7 @@ function updateMeme(meme, data) {
     }
 }
 
-function deleteMeme(data) {
-    var index = sessionStorage.getItem("index");
-    index = parseInt(index);
-
-    var counter = 1;
-    for (var key2 in data.val()) {
-        if (counter == index) {
-            var user = firebase.auth().currentUser;
-            firebase.database().ref(user.uid).child(key2).remove(function(error) {
-                if (error) {
-                    alert(error);
-                }
-                else {
-                    alert("Meme Deleted!");
-                    window.location = "read.html";
-                }
-            });
-            break;
-        }
-        counter++;
-    }
-}
-
+// Functions for My Account page
 function changePassword(oldPass, newPass) {
     var user = firebase.auth().currentUser;
     var credential = firebase.auth.EmailAuthProvider.credential(user.email, oldPass);

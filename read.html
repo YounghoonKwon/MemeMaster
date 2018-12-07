@@ -4,23 +4,75 @@
 <head>
     <meta charset="utf-8" />
     <title>MemeMaster</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
+        }
+
+        h1 {
+            grid-column-start: col1-start;
+        }
+
+        #user_account {
+            grid-column-start: col2-start;
+            margin: auto;
+            height: 40px;
+        }
+
+        #logout {
+            grid-column-start: col3-start;
+            margin: auto;
+            width: 80px;
+            height: 40px;
+        }
+
+        .edit_button {
+            height: 30px;
+            width: 30px;
+            grid-column-start: list-col2;
+        }
+
+
+
+        ._button {
+            background-color: #1a73e8;
+            border-style: none;
+            border-radius: 4px;
+            color: white;
+            padding: 10px;
+        }
+
+        .delete_button {
+            height: 30px;
+            width: 30px;
+            grid-column-start: col1-start;
+        }
+
+    </style>
+
 </head>
 
 <body>
-    <h1>
-        <a href="read.html">MemeMaster</a>
-    </h1>
+    <div id="container">
+        <h1>
+            <a href="read.html">MemeMaster</a>
+        </h1>
 
-    <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
-    <button id="user_account">My Account</button>
+        <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
+        <button id="user_account" class="blue_button">My Account</button>
 
-    <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
-    <button id="logout">Log Out</button>
+        <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
+        <button id="logout" class="blue_button">Log Out</button>
+    </div>
 
     <ul id="memeList"></ul>
 
     <!-- When the Add Meme button is pressed, the user is redirected to the meme editing page -->
-    <button id="addMeme">Add Meme</button>
+    <button id="addMeme" class="blue_button">Add Meme</button>
 
     <dialog id="confirm_delete">
         Are you sure you want to delete this meme?
@@ -30,6 +82,7 @@
             <button id="cancel_delete">Cancel</button>
         </content>
     </dialog>
+
 </body>
 </html>
 
@@ -111,76 +164,75 @@
 
 
 
-
 <script>
 /*
-                var ref = database.ref(userToken);
-                ref.on('value', gotData, errData);
-                function gotData(data) {
-                    // var keys = Object.keys(memes[0]);
-                    for (var key1 in data.val()) {
-                        for (var key2 in data.val()[key1]) {
-                            var meme = {
-                                topText: "",
-                                bottomText: "",
-                                fontSize: "",
-                                fontFamily: "",
-                                imgSrc: ""
-                            };
-                            for (var item in data.val()[key1][key2]) {
-                                if (item == "bottomText") {
-                                    meme.bottomText = data.val()[key1][key2][item];
-                                }
-                                else if (item == "topText") {
-                                    meme.topText = data.val()[key1][key2][item];
-                                }
-                                else if (item == "fontSize") {
-                                    meme.fontSize = data.val()[key1][key2][item];
-                                }
-                                else if (item == "fontFamily") {
-                                    meme.fontFamily = data.val()[key1][key2][item];
-                                }
-                                else if (item == "imgSrc") {
-                                    meme.imgSrc = data.val()[key1][key2][item];
-                                }
+                        var ref = database.ref(userToken);
+                        ref.on('value', gotData, errData);
+                        function gotData(data) {
+                            // var keys = Object.keys(memes[0]);
+                            for (var key1 in data.val()) {
+                                for (var key2 in data.val()[key1]) {
+                                    var meme = {
+                                        topText: "",
+                                        bottomText: "",
+                                        fontSize: "",
+                                        fontFamily: "",
+                                        imgSrc: ""
+                                    };
+                                    for (var item in data.val()[key1][key2]) {
+                                        if (item == "bottomText") {
+                                            meme.bottomText = data.val()[key1][key2][item];
+                                        }
+                                        else if (item == "topText") {
+                                            meme.topText = data.val()[key1][key2][item];
+                                        }
+                                        else if (item == "fontSize") {
+                                            meme.fontSize = data.val()[key1][key2][item];
+                                        }
+                                        else if (item == "fontFamily") {
+                                            meme.fontFamily = data.val()[key1][key2][item];
+                                        }
+                                        else if (item == "imgSrc") {
+                                            meme.imgSrc = data.val()[key1][key2][item];
+                                        }
 
+                                    }
+                                    meme.id = key2;
+                                    //console.log(meme.imgSrc);
+                                    showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
+                                }
                             }
-                            meme.id = key2;
-                            //console.log(meme.imgSrc);
-                            showMemeList(meme.bottomText, meme.topText, meme.fontSize, meme.fontFamily, meme.imgSrc, meme.id);
+                        });
+
+                        function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
+
+                            appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
+                            appendButtons(memeId);
+
                         }
-                    }
-                });
 
-                function showMemeList(bottomText, topText, fontSize, fontFamily, image, memeId) {
-
-                    appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId);
-                    appendButtons(memeId);
-
-                }
-
-                function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
-                    var div = document.createElement("div");
-                    var canvas = document.createElement("canvas");
-                    div.id = memeId;
-                    canvas.width = 300;
-                    canvas.height = 300;
-                    canvas.style = "border:1px solid";
-                    var ctx = canvas.getContext("2d");
-                    var img = new Image();
-                    img.onload = function () {
-                        ctx.drawImage(img, 0, 0, 300, 300);
-                        var font = fontSize + "px " + fontFamily;
-                        ctx.font = font;
-                        ctx.fillStyle = "white";
-                        ctx.strokeStyle = "black";
-                        ctx.textAlign = "center";
-                        ctx.strokeText(topText, 150, 50);
-                        ctx.strokeText(bottomText, 150, 270);
-                    }
-                    img.src = image;
-                    document.getElementById("memeList").appendChild(div);
-                    document.getElementById(memeId).appendChild(canvas);
-                }
+                        function appendMeme(bottomText, topText, fontSize, fontFamily, image, memeId) {
+                            var div = document.createElement("div");
+                            var canvas = document.createElement("canvas");
+                            div.id = memeId;
+                            canvas.width = 300;
+                            canvas.height = 300;
+                            canvas.style = "border:1px solid";
+                            var ctx = canvas.getContext("2d");
+                            var img = new Image();
+                            img.onload = function () {
+                                ctx.drawImage(img, 0, 0, 300, 300);
+                                var font = fontSize + "px " + fontFamily;
+                                ctx.font = font;
+                                ctx.fillStyle = "white";
+                                ctx.strokeStyle = "black";
+                                ctx.textAlign = "center";
+                                ctx.strokeText(topText, 150, 50);
+                                ctx.strokeText(bottomText, 150, 270);
+                            }
+                            img.src = image;
+                            document.getElementById("memeList").appendChild(div);
+                            document.getElementById(memeId).appendChild(canvas);
+                        }
 */
 </script>

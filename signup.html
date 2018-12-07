@@ -4,28 +4,39 @@
 <head>
     <meta charset="utf-8" />
     <title>MemeMaster</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        button {
+            margin-top: 10px;
+            margin-left: 50%;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>MemeMaster</h1>
+    <h1>
+        <a href="login.html">MemeMaster</a>
+    </h1>
 
     <br />
 
-    <div>
+    <div class="sign_form">
         <h3>Sign Up</h3>
 
-        <form>
-            <label>Email:</label>
-            <input id="new_email" type="text" />
+        <div class="boxed">
+            <form>
+                <label>Email:</label>
+                <input id="new_email" type="text" />
 
-            <br />
+                <br />
 
-            <label>Password:</label>
-            <input id="new_password" type="password" />
-        </form>
+                <label>Password:</label>
+                <input id="new_password" type="password" />
+            </form>
 
-        <button id="create_account">Create Account</button>
-
+            <button id="create_account" class="blue_button">Create Account</button>
+        </div>
     </div>
 </body>
 </html>

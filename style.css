@@ -1,0 +1,33 @@
+.sign_form {
+    margin: auto;
+}
+
+h3 {
+    text-align: center;
+}
+
+.boxed {
+    padding: 10px;
+    border-style: solid;
+    width: 260px;
+    margin: auto;
+}
+
+label {
+    display: inline-grid;
+    width: 70px;
+    text-align: right;
+}
+
+input {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.blue_button {
+    background-color: #1a73e8;
+    border-style: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+}

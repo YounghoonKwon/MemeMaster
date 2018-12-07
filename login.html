@@ -4,35 +4,65 @@
 <head>
     <meta charset="utf-8" />
     <title>MemeMaster</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: [col1-start] 75% [col2-start] auto;
+            grid-column-gap: 10px;
+        }
+
+        h1 {
+            grid-column-start: col1-start;
+        }
+
+        #sign_up {
+            grid-column-start: col2-start;
+            width: 140px;
+            height: 40px;
+            margin: auto;
+            margin-left: 50%;
+        }
+
+        #login {
+            margin-top: 10px;
+            margin-left: 70%;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>
-        <a href="login.html">MemeMaster</a>
-    </h1>
+    <div id="container">
+        <h1>
+            <a href="login.html">MemeMaster</a>
+        </h1>
 
-    <!-- When the sign up button is pressed, the user is redirected to the account creation page -->
-    <button id="sign_up">Sign Up</button>
+        <!-- When the sign up button is pressed, the user is redirected to the account creation page -->
+        <button id="sign_up" class="blue_button">Create An Account</button>
+    </div>
 
-    <br />
-
-    <div>
+    <div class="sign_form">
         <h3>Sign In</h3>
 
-        <!-- Form for user's login information-->
-        <form>
-            <label>Email:</label>
-            <input id="user_email" type="text" />
+        <div class="boxed">
+            <!-- Form for user's login information-->
+            <form>
+                <label>Email:</label>
+                <input id="user_email" type="text" />
 
-            <br />
+                <br />
 
-            <label>Password:</label>
-            <input id="user_pass" type="password" />
-        </form>
+                <label>Password:</label>
+                <input id="user_pass" type="password" />
+            </form>
 
-        <!-- When the login button is pressed, the user is redirected to 
-             their read page if they inputted the correct login information -->
-        <button id="login">Log In</button>
+
+
+            <!-- When the login button is pressed, the user is redirected to
+            their read page if they inputted the correct login information -->
+            <button id="login" class="blue_button">Log In</button>
+        </div>
     </div>
 </body>
 </html>
