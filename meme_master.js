@@ -221,6 +221,21 @@ function handleImage(e) {
     }
     reader.readAsDataURL(e.target.files[0]);
 }
+function handleUrlImage() {
+    var img = new Image();
+    img.src = prompt("Url of a picture:");
+    // The URL isn't valid or the resource isn't a picture
+    img.onerror = function() { alert("Provided URL does not point to a valid picture.") };
+    // Ok, we have correct picture; display it
+    img.onload = function() {
+        var topText = document.getElementById("topText").value;
+            var bottomText = document.getElementById("bottomText").value;
+            var fontSize = document.getElementById("fontSize").value;
+            var fontFamily = document.getElementById("fontFamily").value;
+            showCanvas(topText, bottomText, img, fontSize, fontFamily);
+    }
+    document.getElementById("img1").src = img.src;
+}
 
 function applyChanges() {
     var topText = document.getElementById("topText").value;
