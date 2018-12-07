@@ -1,3 +1,23 @@
+/* Add some design to the MemeMaster header */
+h1 {
+    grid-column-start: col1-start;
+    color: #EEE;
+    text-shadow: 4px 4px 1px #300000;
+    4px 6px 1px #400000;
+    4px 8px 1px #500000;
+    4px 60px 5px #FF0000;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: [col1-start] 75% [col2-start] auto;
+    grid-column-gap: 10px;
+}
+
 .sign_form {
     margin: auto;
 }
@@ -30,4 +50,5 @@ input {
     border-radius: 4px;
     color: white;
     padding: 10px;
+    height: 40px;
 }

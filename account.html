@@ -3,44 +3,50 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
     <title>MemeMaster</title>
+
+    <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Define CSS for styling specific to this page -->
     <style>
-        .container {
+        /* Define the grid for the items in the header */
+        header {
             display: grid;
-            grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
+            grid-template-columns: [col1-start] 75% [col2-start] auto;
         }
 
-        h1 {
-            grid-column-start: col1-start;
-            color: #EEE;
-            text-shadow: 4px 4px 1px #300000;
-            4px 6px 1px #400000;
-            4px 8px 1px #500000; /*......and so on, until*/
-            4px 60px 5px #FF0000;
-        }
-
-        #user_account {
+        /* Define styling for the buttons in the header */
+        #redirect_buttons {
             grid-column-start: col2-start;
             margin: auto;
-            height: 40px;
         }
 
-        #logout {
-            grid-column-start: col3-start;
-            margin: auto;
-            width: 80px;
-            height: 40px;
+        /* Align the error message to the center of the page */
+        #err_mess {
+            text-align: center;
+            margin: 10px;
         }
 
+        /* Make the error message bold and red */
+        output {
+            font-weight: bold;
+            color: red;
+            font-size: medium;
+        }
+
+        /* Set the width of the box for the Change Password form */
         #pass_form {
             width: 280px;
         }
 
+        /* Set the width of the labels in the form */
         label {
             width: 100px;
         }
 
+        /* Make the Change Password button right aligned */
         #change_pass {
             margin-left: 50%;
         }
@@ -48,87 +54,106 @@
 </head>
 
 <body>
-    <div class="container">
+    <header>
         <h1>
-            <a href="read.html"> MemeMaster</a>
+            <!-- When the header is clicked, the user is redirected to their Meme page -->
+            <a href="read.html">MemeMaster</a>
         </h1>
-        <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
-        <button id="user_account" class="blue_button"> My Account</button>
-        <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
-        <button id="logout" class="blue_button"> Log Out</button>
-    </div>
-    <br / >
 
-    <div>
-        <h3> My Account</h3>
+        <div id="redirect_buttons">
+            <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
+            <button id="user_account" class="blue_button">My Account</button>
 
-        <div class="boxed" id="pass_form">
-            <!-- Displays the user's email associated with their account -->
-            <label> Email:</label>
-            <span id="user_email"> </span>
-
-            <br / >
-            <!-- Form for taking in the user's old and new password -->
-            <form>
-                <label> Old Password:</label>
-                <input type="password" id="re_enter" / >
-
-                <br / >
-
-                <label> New Password:</label>
-                <input type="password" id="new_pass" / >
-            </form>
-            <!-- When the Change Password button is pressed, a password update is attempted -->
-            <button id="change_pass" class="blue_button"> Change Password</button>
+            <!-- When the log out button is clicked, the user is logged out and redirected to the log in page -->
+            <button id="logout" class="blue_button">Log Out</button>
         </div>
+    </header>
+
+    <h3> My Account</h3>
+
+    <!-- If an error occurs when the user tries to change their password, the error message will be in the output element -->
+    <div id="err_mess">
+        <output id="error"></output>
+    </div>
+
+    <div class="boxed" id="pass_form">
+        <!-- Displays the user's email associated with their account -->
+        <label> Email:</label>
+        <span id="user_email"> </span>
+
+        <!-- Form for taking in the user's old and new password -->
+        <form>
+            <label>Old Password:</label>
+            <input type="password" id="re_enter" />
+
+            <label>New Password:</label>
+            <input type="password" id="new_pass" />
+        </form>
+
+        <!-- When the Change Password button is clicked, a password update is attempted -->
+        <button id="change_pass" class="blue_button">Change Password</button>
     </div>
 
 </body>
 </html>
+
 <!-- The script for Firebase -->
 <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
 <script>
     // Initialize Firebase
     var config = {
-        apiKey: "AIzaSyCdi5c7M5eVOWShwCXOIjxQcweE_flzrZQ", authDomain: "cse-134b-final-project.firebaseapp.com", databaseURL: "https://cse-134b-final-project.firebaseio.com", projectId: "cse-134b-final-project", storageBucket: "cse-134b-final-project.appspot.com", messagingSenderId: "828897432315"
-    }
-
-        ;
+        apiKey: "AIzaSyCdi5c7M5eVOWShwCXOIjxQcweE_flzrZQ",
+        authDomain: "cse-134b-final-project.firebaseapp.com",
+        databaseURL: "https://cse-134b-final-project.firebaseio.com",
+        projectId: "cse-134b-final-project",
+        storageBucket: "cse-134b-final-project.appspot.com",
+        messagingSenderId: "828897432315"
+    };
     firebase.initializeApp(config);
 </script>
+
 <!-- Link the external JavaScript file-->
-<script src="meme_master.js" > </script >
+<script src="meme_master.js"></script>
+
 <!-- JavaScript code for My Account button's onclick function-->
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
+        //Go to the My Account page
         window.location = "account.html"
     }
-
 </script>
+
 <!-- JavaScript code for log out button's onclick function-->
 <script type="text/javascript">
     document.getElementById("logout").onclick = function () {
+        //Log the user out using Firebase's sign off function
         logout();
     }
-
 </script>
 <!-- JavaScript code for Change Password button's onclick function-->
 <script type="text/javascript">
     document.getElementById("change_pass").onclick = function () {
+        //If an error message is in the output element, remove the message
+        document.getElementById("error").innerHTML = "";
+
+        //Get the old password and new password that the user inputted and use the Firebase function to change the password
         var oldPassword = document.getElementById("re_enter").value;
         var newPassword = document.getElementById("new_pass").value;
         changePassword(oldPassword, newPassword);
     }
-
 </script>
+
 <!-- Set an observer on the Auth object to get the user information from Firebase -->
 <script>
     firebase.auth().onAuthStateChanged(function (user) {
+        //If a user is logged in, display their email
         if (user) {
             document.getElementById("user_email").innerHTML = `${user.email}`;
         }
+
+        //If no logged in user is found, redirect the user to the Log In page
         else {
-            alert("No User!");
+            console.log("No User!");
             window.location = login.html;
         }
     });
