@@ -24,6 +24,7 @@
 
     <div>
         <input type="file" id="imageLoader" name="imageLoader" />
+        <input type='button' onclick="handleUrlImage(this);" value="image url" />
 
         <br />
 
@@ -96,6 +97,7 @@
     var newImage = document.getElementById("imageLoader");
     newImage.addEventListener("change", handleImage, false);
 </script>
+
 
 <!-- JavaScript code for the apply button's onclick function-->
 <script type="text/javascript">
