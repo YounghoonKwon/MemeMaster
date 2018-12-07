@@ -46,10 +46,13 @@ function gotData(data) {
     var UID = firebase.auth().currentUser.uid;
     for (var key2 in data.val()[UID]) {
         var li = document.createElement("li");
+        var div = document.createElement("div");
         var img = document.createElement("img");
+        div.className = "button_list";
         img.src = data.val()[UID][key2]["memeSrc"];
         img.className = "meme_img";
         li.appendChild(img);
+        li.appendChild(div);
         li.id = counter;
         document.getElementById("memeList").appendChild(li);
         appendButtons(counter);
@@ -85,11 +88,6 @@ function createDeleteButton(memeId){
     deleteButton.className = "delete_button";
     deleteButton.onclick = function () {
         document.getElementById("confirm_delete").open = true;
-        //document.getElementById("confirm_delete").display = "block";
-        document.getElementsByTagName("dialog").display = "block";
-        var overlay = document.getElementById("overlay");
-        overlay.style.display = "block";
-        overlay.style.opacity = .5;
         sessionStorage.setItem("index", memeId.toString());
     }
     document.getElementById(memeId).appendChild(deleteButton);
@@ -98,8 +96,7 @@ function createDeleteButton(memeId){
 function createDownloadButton(memeId){
     var downloadButton = document.createElement("a");
     var childNodes = document.getElementById(memeId).children;
-    downloadButton.download = "myMeme-" + memeId;
-    downloadButton.className = "down_button";
+    downloadButton.download = "myMeme-"+memeId;
     downloadButton.href = childNodes[0].src;
     document.getElementById(memeId).appendChild(downloadButton);
     downloadButton.innerHTML = "Download";
@@ -107,8 +104,7 @@ function createDownloadButton(memeId){
 
 function createShareButton(memeId) {
     var shareButton = document.createElement("button");
-    shareButton.innerHTML = "Get Link";
-    shareButton.className = "share_button";
+    shareButton.innerHTML = "Get Link"
     shareButton.onclick = function () {
         var text = document.getElementById(`${memeId}`).childNodes[0].src;
 

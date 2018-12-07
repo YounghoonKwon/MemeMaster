@@ -4,32 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <title>MemeMaster</title>
-    <link rel="stylesheet" href="style.css" />
-
-    <style>
-        #container {
-            display: grid;
-            grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
-        }
-
-        h1 {
-            grid-column-start: col1-start;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="container">
-        <h1>
-            <a href="read.html">MemeMaster</a>
-        </h1>
+    <h1>
+        <a href="read.html">MemeMaster</a>
+    </h1>
 
-        <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
-        <button id="user_account" class="blue_button">My Account</button>
+    <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
+    <button id="user_account">My Account</button>
 
-        <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
-        <button id="logout" class="blue_button">Log Out</button>
-    </div>
+    <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
+    <button id="logout">Log Out</button>
+
     <br />
 
     <canvas id="memeCanvas" width="300" height="300" style="border:1px solid"></canvas>
@@ -66,8 +53,8 @@
         <input type="text" id="fontSize" value="30"><br>
     </div>
 
-    <button id="apply" class="blue_button">Apply Changes</button>
-    <button id="save" class="blue_button">Save Meme</button>
+    <button id="apply">Apply Changes</button>
+    <button id="save">Save Meme</button>
     <!--<img id='output'>-->
 </body>
 </html>
