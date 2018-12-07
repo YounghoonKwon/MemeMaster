@@ -6,19 +6,53 @@
     <title>MemeMaster</title>
     <link rel="stylesheet" href="style.css" />
     <style>
-        #container {
+        .container {
             display: grid;
             grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
         }
 
         h1 {
             grid-column-start: col1-start;
+            color: #EEE;
+            text-shadow: 4px 4px 1px #300000;
+            4px 6px 1px #400000;
+            4px 8px 1px #500000; /*......and so on, until*/
+            4px 60px 5px #FF0000;
+        }
+
+        #user_account {
+            grid-column-start: col2-start;
+            margin: auto;
+            height: 40px;
+        }
+
+        #logout {
+            grid-column-start: col3-start;
+            margin: auto;
+            width: 80px;
+            height: 40px;
+        }
+
+        label {
+            width: 100px;
+        }
+
+        #meme_form {
+            width: 380px;
+        }
+
+        #meme_button {
+            padding: 10px;
+        }
+
+        main {
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div id="container">
+    <div class="container">
         <h1>
             <a href="read.html">MemeMaster</a>
         </h1>
@@ -32,43 +66,48 @@
 
     <br />
 
-    <canvas id="memeCanvas" width="300" height="300" style="border:1px solid"></canvas>
-    <img id="img1" style="display: none" src="defaultimage.png" />
+    <main>
+        <canvas id="memeCanvas" width="300" height="300" style="border:1px solid"></canvas>
+        <img id="img1" style="display: none" src="defaultimage.png" />
 
-    <div>
-        <input type="file" id="imageLoader" name="imageLoader" />
-        <input type='button' onclick="handleUrlImage(this);" value="image url" />
+        <div id="meme_form" class="boxed">
+            <input type="file" id="imageLoader" name="imageLoader" />
+            <input type='button' onclick="handleUrlImage(this);" value="Input Image URL" />
 
-        <br />
+            <br />
 
-        <label>Top:</label>
-        <input type="text" id="topText" value="Add Text">
+            <label>Top:</label>
+            <input type="text" id="topText" value="Add Text">
 
-        <br />
+            <br />
 
-        <label>Bottom:</label>
-        <input type="text" id="bottomText" value="Here">
+            <label>Bottom:</label>
+            <input type="text" id="bottomText" value="Here">
 
-        <br />
+            <br />
 
-        <label>Font Family:</label>
-        <select id="fontFamily">
-            <option value="Impact">Impact</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Times">Times</option>
-            <option value="Arial">Arial</option>
-            <option value="serif">serif</option>
-            <option value="sans-serif">sans-serif</option>
-            <option value="Helvetica">Helvetica</option>
-        </select>
+            <label>Font Family:</label>
+            <select id="fontFamily">
+                <option value="Impact">Impact</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Times">Times</option>
+                <option value="Arial">Arial</option>
+                <option value="serif">serif</option>
+                <option value="sans-serif">sans-serif</option>
+                <option value="Helvetica">Helvetica</option>
+            </select>
 
-        <br />
-        <label>Font Size:</label>
-        <input type="text" id="fontSize" value="30"><br>
-    </div>
+            <br />
+            <label>Font Size:</label>
+            <input type="text" id="fontSize" value="30"><br>
 
-    <button id="apply" class="blue_button">Apply Changes</button>
-    <button id="save" class="blue_button">Save Meme</button>
+
+            <div id="meme_button">
+                <button id="apply" class="blue_button">Apply Changes</button>
+                <button id="save" class="blue_button">Save Meme</button>
+            </div>
+        </div>
+    </main>
     <!--<img id='output'>-->
 </body>
 </html>

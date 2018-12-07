@@ -8,13 +8,9 @@
     <link rel="stylesheet" href="style.css" />
 
     <style>
-        #container {
+        .container {
             display: grid;
             grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
-        }
-
-        a {
-            text-decoration: none;
         }
 
         h1 {
@@ -24,6 +20,10 @@
             4px 6px 1px #400000;
             4px 8px 1px #500000; /*......and so on, until*/
             4px 60px 5px #FF0000;
+        }
+
+        a {
+            text-decoration: none;
         }
 
         #user_account {
@@ -111,7 +111,7 @@
 </head>
 
 <body>
-    <div id="container">
+    <div class="container">
         <h1>
             <a href="read.html">MemeMaster</a>
         </h1>
