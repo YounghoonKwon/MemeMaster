@@ -43,20 +43,8 @@
             height: 30px;
             width: 30px;
         }
-
-        #dialog_buttons {
-            margin: 10px;
-        }
-
-        #ok_delete {
-            margin-left: 30%;
-        }
-
-        #ok_cancel {
-            margin-left: 10px;
-        }
-
-        #centerpoint {
+        /* Styling for the dialog for delete confirmation */
+        dialog {
             top: 30%;
             left: 35%;
             position: absolute;
@@ -79,7 +67,12 @@
             height: 100%;
             top: 0px;
             left: 0px;
+        }
+
+        /* Centers all content inside the dialog */
+        content {
             text-align: center;
+        }
     </style>
 
 </head>
@@ -211,6 +204,7 @@
     ref.once('value', gotData, errData);
 </script>
 
+<!-- JavaScript code for adding a service worker -->
 <script>
     // Check that service workers are registered
     if ('serviceWorker' in navigator) {

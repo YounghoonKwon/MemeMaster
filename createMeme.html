@@ -3,24 +3,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
     <title>MemeMaster</title>
+
+    <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
     <style>
-        .container {
-            display: grid;
-            grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
-        }
-        #user_account {
-            grid-column-start: col2-start;
-            margin: auto;
-            height: 40px;
-        }
-        #logout {
-            grid-column-start: col3-start;
-            margin: auto;
-            width: 80px;
-            height: 40px;
-        }
         label {
             width: 100px;
         }
@@ -54,17 +42,19 @@
 </head>
 
 <body>
-    <div class="container">
+    <header>
         <h1>
             <a href="read.html">MemeMaster</a>
         </h1>
 
-        <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
-        <button id="user_account" class="blue_button">My Account</button>
+        <div class="redirect_buttons">
+            <!-- When the My Account button is pressed, the user is redirected to the My Account page -->
+            <button id="user_account" class="blue_button">My Account</button>
 
-        <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
-        <button id="logout" class="blue_button">Log Out</button>
-    </div>
+            <!-- When the log out button is pressed, the user is logged out and redirected to the log in page -->
+            <button id="logout" class="blue_button">Log Out</button>
+        </div>
+    </header>
 
     <br />
 
