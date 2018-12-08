@@ -5,9 +5,13 @@
     <meta charset="utf-8" />
     <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
     <title>MemeMaster</title>
+
+    <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
 
+    <!-- Define CSS for styling specific to this page -->
     <style>
+
         h1 {
             grid-column-start: col1-start;
         }
@@ -19,7 +23,6 @@
             margin: auto;
             margin-left: 50%;
         }
-
         #login {
             margin-top: 10px;
             margin-left: 70%;
@@ -30,9 +33,9 @@
 <body>
     <div class="container">
         <h1>
+            <!-- When the logo is clicked, the user is redirected to the Log In page -->
             <a href="login.html">MemeMaster</a>
         </h1>
-
         <!-- When the sign up button is pressed, the user is redirected to the account creation page -->
         <button id="sign_up" class="blue_button">Create An Account</button>
     </div>
@@ -46,18 +49,26 @@
                 <label>Email:</label>
                 <input id="user_email" type="text" />
 
-                <br />
+    <!-- If an error occurs when the user tries to log in, the error message will be in the output element -->
+    <div class="err_spacing">
+        <output id="error"></output>
+    </div>
 
-                <label>Password:</label>
-                <input id="user_pass" type="password" />
-            </form>
+    <div class="boxed">
+        <!-- Form for user's login information-->
+        <form>
+            <label>Email:</label>
+            <input id="user_email" type="text" />
 
+            <br />
 
+            <label>Password:</label>
+            <input id="user_pass" type="password" />
+        </form>
 
-            <!-- When the login button is pressed, the user is redirected to
-            their read page if they inputted the correct login information -->
-            <button id="login" class="blue_button">Log In</button>
-        </div>
+        <!-- When the login button is pressed, the user is redirected to
+        their read page if they inputted the correct login information -->
+        <button id="login" class="blue_button">Log In</button>
     </div>
 </body>
 </html>
@@ -80,11 +91,17 @@
 <!-- Link the external JavaScript file-->
 <script src="meme_master.js"></script>
 
-<!-- Check that the login information exists/is correct -->
+<!-- JavaScript code for log in button's onclick function-->
 <script type="text/javascript">
     document.getElementById("login").onclick = function () {
+        //If an error message is in the output element, remove the message
+        document.getElementById("error").innerHTML = "";
+
+        //Get the email and password that the user inputted
         email = document.getElementById("user_email").value;
         password = document.getElementById("user_pass").value;
+
+        //Log the user in using Firebase's sign in function
         login(email, password);
     }
 </script>
@@ -92,6 +109,7 @@
 <!-- JavaScript code for sign up button's onclick function-->
 <script type="text/javascript">
     document.getElementById("sign_up").onclick = function () {
+        //Go to the sign up page
         window.location = "signup.html"
     }
 </script>
@@ -99,10 +117,9 @@
 <!-- Set an observer on the Auth object to get the user information from Firebase -->
 <script>
     firebase.auth().onAuthStateChanged(function (user) {
+        //If the user logged in successfully, go to their read page
         if (user) {
             window.location = "read.html";
-        } else {
-            //window.location = "login.html";
         }
     });
 </script>

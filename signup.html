@@ -4,9 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <title>MemeMaster</title>
+    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
+    <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
 
+    <!-- Define CSS for styling specific to this page -->
     <style>
+        /* Styling for Create Account button */
         button {
             margin-top: 10px;
             margin-left: 50%;
@@ -16,31 +20,34 @@
 
 <body>
     <h1>
+        <!-- When the logo is clicked, the user is redirected to the log in page -->
         <a href="login.html">MemeMaster</a>
     </h1>
 
     <br />
 
     <div class="memecontainer">
+
         <h3>Sign Up</h3>
 
         <div class="">
             <form>
+                <!-- Form for user's account information-->
                 <label>Email:</label>
                 <input id="new_email" type="text" />
-
-                <br />
 
                 <label>Password:</label>
                 <input id="new_password" type="password" />
             </form>
 
+            <!-- When the Create Account button is clicked, an attempt to create a new account is made -->
             <button id="create_account" class="blue_button">Create Account</button>
         </div>
     </div>
 </body>
 </html>
 
+<!-- The script for Firebase -->
 <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
 <script>
     // Initialize Firebase
@@ -55,13 +62,20 @@
     firebase.initializeApp(config);
 </script>
 
+<!-- Link the external JavaScript file-->
 <script src="meme_master.js"></script>
 
+<!-- JavaScript code for create account button's onclick function-->
 <script type="text/javascript">
     document.getElementById("create_account").onclick = function () {
+        //Get the email and password that the user inputted
         email = document.getElementById("new_email").value;
         password = document.getElementById("new_password").value;
+
+        //Create a new account using Firebase's create account function
         newAccount(email, password);
+
+        //Go to the login page
         window.location = "login.html";
     }
 </script>
