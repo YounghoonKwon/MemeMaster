@@ -11,18 +11,13 @@
 
     <!-- Define CSS for styling specific to this page -->
     <style>
-        /* Styling for the meme edit buttons */
-        .edit_button {
-            height: 30px;
-            width: 30px;
-            margin: 10px;
+        .container {
+            display: grid;
+            grid-template-columns: [col1-start] 70% [col2-start] 15% [col3-start] auto;
         }
 
-        /* Styling for the meme delete buttons */
-        .delete_button {
-            height: 30px;
-            width: 30px;
-            margin: 10px;
+        a {
+            text-decoration: none;
         }
 
         /* Styling for the meme download buttons */
@@ -39,17 +34,58 @@
             font-size: medium;
             font-weight: bold;
         }
-        
-        /* Styling for the dialog for delete confirmation */
-        dialog {
-            top: 30%;
-            left: 20px;
-            position: absolute;
-            z-index: 3;
-            padding: 30px;
+
+        .edit_button {
+            height: 30px;
+            width: 30px;
+            grid-column-start: list-col2;
+            margin: 22px;
         }
 
-        /* Styling to put an overlay when delete confirmation dialog pops up */
+        .delete_button {
+            height: 30px;
+            width: 30px;
+            margin: 22px;
+        }
+
+        .download_button {
+            margin: 22px;
+            height: 30px;
+            width: 30px;
+        }
+
+        .share_button {
+            margin:22px;
+            height: 30px;
+            width: 30px;
+        }
+
+        #dialog_buttons {
+            margin: 10px;
+        }
+
+        #ok_delete {
+            margin-left: 30%;
+        }
+
+        #ok_cancel {
+            margin-left: 10px;
+        }
+
+        #centerpoint {
+            top: 30%;
+            left: 35%;
+            position: absolute;
+        }
+
+        dialog {
+            z-index: 3;
+            margin: 150px auto 0px auto;
+            width: 300px;
+            height: 100px;
+            border: 0px !important;
+        }
+
         #overlay {
             display: none;
             z-index: 2;
@@ -59,28 +95,13 @@
             height: 100%;
             top: 0px;
             left: 0px;
-        }
-
-        /* Centers all content inside the dialog */
-        content{
             text-align: center;
-        }
-
-        /* Puts spacing between message and buttons in dialog */
-        #dialog_buttons {
-            margin: 10px;
-        }
-
-        /* Add a gap in between the OK and Cancel buttons in dialog */
-        #cancel_delete {
-            margin-left: 35px;
-        }
     </style>
 
 </head>
 
 <body>
-    <header>
+    <div class="container">
         <h1>
             <!-- When the logo is clicked, the user is redirected to their read page -->
             <a href="read.html">MemeMaster</a>
@@ -102,20 +123,16 @@
 
     <div id="overlay"></div>
 
-    <!-- If the user clicks a delete button, the dialog pops up confirming delete -->
-    <dialog id="confirm_delete">
-        <content>
+    <div id="centerpoint">
+        <dialog id="confirm_delete" border=0 class="memecontainer">
             Are you sure you want to delete this meme?
-
-            <div id="dialog_buttons">
-                <!-- When the OK button is clicked, the selected meme is deleted -->
+            <content>
+                <br />
                 <button id="ok_delete" class="blue_button">OK</button>
-
-                <!-- When the cancel button is clicked, the popup message disappears -->
                 <button id="cancel_delete" class="blue_button">Cancel</button>
-            </div>
-        </content>
-    </dialog>
+            </content>
+        </dialog>
+    </div>
 
 </body>
 </html>

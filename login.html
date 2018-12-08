@@ -11,7 +11,18 @@
 
     <!-- Define CSS for styling specific to this page -->
     <style>
-        /* Make the Log In button right aligned */
+
+        h1 {
+            grid-column-start: col1-start;
+        }
+
+        #sign_up {
+            grid-column-start: col2-start;
+            width: 140px;
+            height: 40px;
+            margin: auto;
+            margin-left: 50%;
+        }
         #login {
             margin-top: 10px;
             margin-left: 70%;
@@ -20,19 +31,23 @@
 </head>
 
 <body>
-    <header>
+    <div class="container">
         <h1>
             <!-- When the logo is clicked, the user is redirected to the Log In page -->
             <a href="login.html">MemeMaster</a>
         </h1>
+        <!-- When the sign up button is pressed, the user is redirected to the account creation page -->
+        <button id="sign_up" class="blue_button">Create An Account</button>
+    </div>
 
-        <div class="redirect_buttons">
-            <!-- When the Create An Account button is clicked, the user is redirected to the account creation page -->
-            <button id="sign_up" class="blue_button">Create An Account</button>
-        </div>
-    </header>
+    <div class="memecontainer">
+        <h3>Sign In</h3>
 
-    <h3>Sign In</h3>
+        <div>
+            <!-- Form for user's login information-->
+            <form>
+                <label>Email:</label>
+                <input id="user_email" type="text" />
 
     <!-- If an error occurs when the user tries to log in, the error message will be in the output element -->
     <div class="err_spacing">

@@ -49,6 +49,8 @@ function gotData(data) {
         var img = document.createElement("img");
         img.src = data.val()[UID][key2]["memeSrc"];
         img.className = "meme_img";
+        li.className = "memecontainer"
+        li.appendChild(img);
         li.id = counter;
         li.appendChild(img);
         document.getElementById("memeList").appendChild(li);
@@ -96,22 +98,24 @@ function createDeleteButton(memeId){
 }
 
 function createDownloadButton(memeId){
+    var imgLayer = document.createElement("img");
+    imgLayer.src = "download.png";
+    imgLayer.className = "download_button";
     var downloadButton = document.createElement("a");
     var childNodes = document.getElementById(memeId).children;
     downloadButton.download = "myMeme-" + memeId;
-    downloadButton.className = "down_button";
     downloadButton.href = childNodes[0].src;
     document.getElementById(memeId).appendChild(downloadButton);
-    downloadButton.innerHTML = "Download";
+    downloadButton.appendChild(imgLayer);
 }
 
 function createShareButton(memeId) {
-    var shareButton = document.createElement("button");
-    shareButton.innerHTML = "Get Link";
+
+    var shareButton = document.createElement("img");
+    shareButton.src = "link.png";
     shareButton.className = "share_button";
     shareButton.onclick = function () {
         var text = document.getElementById(`${memeId}`).childNodes[0].src;
-
         navigator.clipboard.writeText(text).then(function () {
             /* clipboard successfully set */
             alert("Link saved to clipboard!");
