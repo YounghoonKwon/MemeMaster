@@ -8,9 +8,9 @@
 
     <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
-    <style>        
+    <style>
         /* Styling to make the form box wide enough */
-        #meme_form{
+        #meme_form {
             width: 380px !important;
             text-align: center;
         }
@@ -160,3 +160,9 @@
 <script type="text/javascript">
     initCanvas();
 </script>
+
+<!-- Alert the user if they do not have JavaScript on their browser -->
+<noscript>
+    alert("Your browser does not support JavaScript!");
+    window.location = "read.html";
+</noscript>
