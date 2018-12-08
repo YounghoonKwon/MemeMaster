@@ -8,35 +8,28 @@
 
     <!-- Link the external CSS file -->
     <link rel="stylesheet" href="style.css" />
-    <style>
-        label {
-            width: 100px;
-        }
+    <style>        
+        /* Styling to make the form box wide enough */
         #meme_form{
-            background:#fff;
-            list-style-type: none;
-            padding: 10px;
-            width:300px;
-            margin:auto;
-            position:relative;
-            opacity: 0.9;
-        }
-        #meme_form:after {
-          background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
-          position: absolute;
-          content: '';
-          height: 4px;
-          right: 0;
-          left: 0;
-          top: 0;
+            width: 380px !important;
+            text-align: center;
         }
 
+        /* Styling to make the labels and inputs of the form aligned */
+        form {
+            width: 270px;
+            text-align: right;
+            display: inline-block;
+        }
+
+        /* Styling to make the select dropdown as wide as the input elements */
+        select {
+            width: 177px;
+        }
+
+        /* Make space between the form and the add meme button */
         #meme_button {
             padding: 10px;
-        }
-
-        main {
-            text-align: center;
         }
     </style>
 </head>
@@ -44,6 +37,7 @@
 <body>
     <header>
         <h1>
+            <!-- When the logo is clicked, the user is redirected to the Log In page -->
             <a href="read.html">MemeMaster</a>
         </h1>
 
@@ -56,51 +50,54 @@
         </div>
     </header>
 
-    <br />
-
     <main>
         <div class="memecontainer">
+            <!-- The canvas element shows the meme and the img element holds the image for the meme -->
             <canvas id="memeCanvas" width="300" height="300" align="center"></canvas>
             <img id="img1" style="display: none" src="defaultimage.png" />
         </div>
-        
 
         <div id="meme_form" class="memecontainer">
+            <!-- This input allows the user to choose an image from their computer -->
             <input type="file" class="inside_form" id="imageLoader" name="imageLoader" />
+
+            <!-- This input allows the user to choose an image from a URL -->
             <input type='button' class="inside_form" onclick="handleUrlImage(this);" value="Input Image URL" />
-            <br>
-            <br>
-            <br>
-            <br>
-            <label>Top:</label>
-            <input class="formInput" type="text" id="topText" value="Add Text">
-            <br />
-
-            <label>Bottom:</label>
-            <input class="formInput" type="text" id="bottomText" value="Here">
-            <br />
-
-            <label>Font Family:</label>
-            <select class="formInput" id="fontFamily">
-                <option value="Impact">Impact</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Times">Times</option>
-                <option value="Arial">Arial</option>
-                <option value="serif">serif</option>
-                <option value="sans-serif">sans-serif</option>
-                <option value="Helvetica">Helvetica</option>
-            </select>
 
             <br />
-            <label>Font Size:</label>
-            <input class="formInput" type="text" id="fontSize" value="30"><br>
+            <br />
+
+            <form>
+                <!-- Form for the meme's data -->
+                <label>Top:</label>
+                <input type="text" id="topText" value="Add Text">
+
+                <label>Bottom:</label>
+                <input type="text" id="bottomText" value="Here">
+
+                <label>Font Family:</label>
+                <select id="fontFamily">
+                    <option value="Impact">Impact</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Times">Times</option>
+                    <option value="Arial">Arial</option>
+                    <option value="serif">serif</option>
+                    <option value="sans-serif">sans-serif</option>
+                    <option value="Helvetica">Helvetica</option>
+                </select>
+
+                <label>Font Size:</label>
+                <input type="text" id="fontSize" value="30">
+            </form>
+
             <div id="meme_button">
+                <!-- When the apply button is pressed, a preview of the edited meme will show on the canvas
+                     When the save button is pressed, the meme will be saved to the database -->
                 <button id="apply" class="blue_button">Apply Changes</button>
                 <button id="save" class="blue_button">Save Meme</button>
             </div>
         </div>
     </main>
-    <!--<img id='output'>-->
 </body>
 </html>
 
@@ -125,6 +122,7 @@
 <!-- JavaScript code for My Account button's onclick function-->
 <script type="text/javascript">
     document.getElementById("user_account").onclick = function () {
+        //Go the the My Account page
         window.location = "account.html"
     }
 </script>
@@ -132,6 +130,7 @@
 <!-- JavaScript code for log out button's onclick function-->
 <script type="text/javascript">
     document.getElementById("logout").onclick = function () {
+        //Log the user out using Firebase's sign off function
         logout();
     }
 </script>

@@ -22,6 +22,11 @@ h1 {
     margin: unset;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .redirect_buttons {
     grid-column-start: col2-start;
     margin: auto;
@@ -73,10 +78,7 @@ output {
   top: 0;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+
 
 
 
@@ -90,17 +92,14 @@ h3{
     text-align: center;
 }
 
+/*
 p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+*/
 
 input {
     margin: 1px;
     padding:2px;
 
-}
-.formInput{
-    width:100px;
-    padding:5px;
-    margin:5px;
 }
 
 .inside_form{
@@ -118,8 +117,3 @@ input {
     height: 40px;
 
 }
-.passInput{
-    margin:5px;
-    width:130px;
-}
-
