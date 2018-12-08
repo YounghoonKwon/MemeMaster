@@ -288,7 +288,7 @@ function canvasData(data) {
             document.getElementById("fontSize").value = data.val()[UID][key2]["fontSize"];
             document.getElementById("fontFamily").value = data.val()[UID][key2]["fontFamily"];
             document.getElementById("img1").src = data.val()[UID][key2]["imgSrc"];
-            window.setTimeout(applyChanges, 1);
+            window.setTimeout(applyChanges, 100);
             break;
         }
         counter++;
