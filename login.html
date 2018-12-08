@@ -3,16 +3,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
     <title>MemeMaster</title>
     <link rel="stylesheet" href="style.css" />
 
     <style>
-        #container {
-            display: grid;
-            grid-template-columns: [col1-start] 75% [col2-start] auto;
-            grid-column-gap: 10px;
-        }
-
         h1 {
             grid-column-start: col1-start;
         }
@@ -33,7 +28,7 @@
 </head>
 
 <body>
-    <div id="container">
+    <div class="container">
         <h1>
             <a href="login.html">MemeMaster</a>
         </h1>
@@ -42,10 +37,10 @@
         <button id="sign_up" class="blue_button">Create An Account</button>
     </div>
 
-    <div class="sign_form">
+    <div class="memecontainer">
         <h3>Sign In</h3>
 
-        <div class="boxed">
+        <div>
             <!-- Form for user's login information-->
             <form>
                 <label>Email:</label>

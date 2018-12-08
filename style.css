@@ -1,27 +1,73 @@
+/* Add some design to the MemeMaster header */
+body{
+    background-color: #ccc;
+    font-family: arial;
+}
+.memecontainer{
+    background:#fff;
+    list-style-type: none;
+    padding: 10px;
+    width:300px;
+    margin:auto;
+    position:relative;
+}
+.memecontainer:after {
+  background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
+  position: absolute;
+  content: '';
+  height: 4px;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: [col1-start] 75% [col2-start] auto;
+    grid-column-gap: 10px;
+}
+
 .sign_form {
     margin: auto;
 }
-
-h3 {
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 75px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: left; }
+h3{
     text-align: center;
 }
 
+p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+
 .boxed {
     padding: 10px;
-    border-style: solid;
     width: 260px;
     margin: auto;
 }
 
 label {
-    display: inline-grid;
-    width: 70px;
-    text-align: right;
+    margin:auto;
+
 }
 
 input {
-    margin-top: 7px;
-    margin-bottom: 7px;
+    margin: 1px;
+    padding:2px;
+
+}
+.formInput{
+    width:100px;
+    padding:5px;
+    margin:5px;
+}
+
+.inside_form{
+    float:left;
+    position:relative;
+    margin:3px;
 }
 
 .blue_button {
@@ -30,4 +76,10 @@ input {
     border-radius: 4px;
     color: white;
     padding: 10px;
+    height: 40px;
+
+}
+.passInput{
+    margin:5px;
+    width:130px;
 }
