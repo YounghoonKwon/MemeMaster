@@ -42,33 +42,27 @@
 
     <div class="memecontainer">
         <h3>Sign In</h3>
+    <!-- If an error occurs when the user tries to log in, the error message will be in the output element -->
+        <div class="err_spacing">
+            <output id="error"></output>
+        </div>
 
-        <div>
+        <div class="boxed">
             <!-- Form for user's login information-->
             <form>
                 <label>Email:</label>
                 <input id="user_email" type="text" />
 
-    <!-- If an error occurs when the user tries to log in, the error message will be in the output element -->
-    <div class="err_spacing">
-        <output id="error"></output>
-    </div>
+                <br />
 
-    <div class="boxed">
-        <!-- Form for user's login information-->
-        <form>
-            <label>Email:</label>
-            <input id="user_email" type="text" />
+                <label>Password:</label>
+                <input id="user_pass" type="password" />
+            </form>
 
-            <br />
-
-            <label>Password:</label>
-            <input id="user_pass" type="password" />
-        </form>
-
-        <!-- When the login button is pressed, the user is redirected to
-        their read page if they inputted the correct login information -->
-        <button id="login" class="blue_button">Log In</button>
+            <!-- When the login button is pressed, the user is redirected to
+            their read page if they inputted the correct login information -->
+            <button id="login" class="blue_button">Log In</button>
+        </div>
     </div>
 </body>
 </html>

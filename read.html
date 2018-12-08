@@ -19,22 +19,6 @@
         a {
             text-decoration: none;
         }
-
-        /* Styling for the meme download buttons */
-        .down_button {
-            margin: 10px;
-        }
-
-        /* Styling for the meme share buttons */
-        .share_button {
-            background-color: white;
-            border-style: none;
-            color: cadetblue;
-            padding: 10px;
-            font-size: medium;
-            font-weight: bold;
-        }
-
         .edit_button {
             height: 30px;
             width: 30px;
@@ -102,19 +86,21 @@
 
 <body>
     <div class="container">
-        <h1>
-            <!-- When the logo is clicked, the user is redirected to their read page -->
-            <a href="read.html">MemeMaster</a>
-        </h1>
+        <header>
+            <h1>
+                <!-- When the logo is clicked, the user is redirected to their read page -->
+                <a href="read.html">MemeMaster</a>
+            </h1>
+        </header>
+            <div class="redirect_buttons">
+                <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
+                <button id="user_account" class="blue_button">My Account</button>
 
-        <div class="redirect_buttons">
-            <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
-            <button id="user_account" class="blue_button">My Account</button>
-
-            <!-- When the log out button is clicked, the user is logged out and redirected to the log in page -->
-            <button id="logout" class="blue_button">Log Out</button>
+                <!-- When the log out button is clicked, the user is logged out and redirected to the log in page -->
+                <button id="logout" class="blue_button">Log Out</button>
+            </div>
         </div>
-    </header>
+
 
     <ul id="memeList"></ul>
 
