@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
+    <base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />
     <title>MemeMaster</title>
 
     <!-- Link the external CSS file -->
@@ -11,39 +11,19 @@
 
     <!-- Define CSS for styling specific to this page -->
     <style>
-        /* Define the grid for the items in the header */
-        header {
-            display: grid;
-            grid-template-columns: [col1-start] 75% [col2-start] auto;
+        /* Styling to make the password form wide enough */
+        #account_cont {
+            width: 350px !important;
         }
 
-        /* Define styling for the buttons in the header */
-        #redirect_buttons {
-            grid-column-start: col2-start;
-            margin: auto;
-        }
-
-        /* Align the error message to the center of the page */
-        #err_mess {
-            text-align: center;
+        /* Make space between the error message and the form */
+        #error {
             margin: 10px;
         }
 
-        /* Make the error message bold and red */
-        output {
-            font-weight: bold;
-            color: red;
-            font-size: medium;
-        }
-
-        /* Set the width of the box for the Change Password form */
+        /* Styling to correctly align the form */
         #pass_form {
-            width: 280px;
-        }
-
-        /* Set the width of the labels in the form */
-        label {
-            width: 100px;
+            width: 300px !important;
         }
 
         /* Make the Change Password button right aligned */
@@ -60,7 +40,7 @@
             <a href="read.html">MemeMaster</a>
         </h1>
 
-        <div id="redirect_buttons">
+        <div class="redirect_buttons">
             <!-- When the My Account button is clicked, the user is redirected to the My Account page -->
             <button id="user_account" class="blue_button">My Account</button>
 
@@ -69,29 +49,31 @@
         </div>
     </header>
 
-    
-
-    <!-- If an error occurs when the user tries to change their password, the error message will be in the output element -->
-    <div id="err_mess">
-        <output id="error"></output>
-    </div>
-
-    <div class="memecontainer" width="500px" id="pass_form">
+    <div class="memecontainer" id="account_cont">
         <h3> My Account</h3>
-        <!-- Displays the user's email associated with their account -->
-        <label> Email:</label>
-        <span id="user_email"> </span>
 
-        <!-- Form for taking in the user's old and new password -->
-        <form>
-            <label>Old Password:</label>
-            <input class="passInput"type="password" id="re_enter" />
-            <label>New Password:</label>
-            <input class="passInput" type="password" id="new_pass" />
-        </form>
+        <!-- If an error occurs when the user tries to change their password, the error message will be in the output element -->
+        <div class="err_spacing">
+            <output id="error"></output>
+        </div>
 
-        <!-- When the Change Password button is clicked, a password update is attempted -->
-        <button id="change_pass" class="blue_button">Change Password</button>
+        <div class="boxed" id="pass_form">
+            <!-- Displays the user's email associated with their account -->
+            <label> Email:</label>
+            <span id="user_email"> </span>
+
+            <!-- Form for taking in the user's old and new password -->
+            <form>
+                <label>Old Password:</label>
+                <input type="password" id="re_enter" />
+
+                <label>New Password:</label>
+                <input type="password" id="new_pass" />
+            </form>
+
+            <!-- When the Change Password button is clicked, a password update is attempted -->
+            <button id="change_pass" class="blue_button">Change Password</button>
+        </div>
     </div>
 
 </body>
@@ -154,7 +136,13 @@
         //If no logged in user is found, redirect the user to the Log In page
         else {
             console.log("No User!");
-            window.location = login.html;
+            window.location = "login.html";
         }
     });
 </script>
+
+<!-- Alert the user if they do not have JavaScript on their browser -->
+<noscript>
+    alert("Your browser does not support JavaScript!");
+    window.location = "read.html";
+</noscript>

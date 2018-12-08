@@ -116,7 +116,7 @@ function createDeleteButton(memeId) {
     //Add the trash can image to the img element
     deleteButton.src = "trash.png";
 
-    //Give a class name to the all the delete buttons to style all the edit buttons
+    //Give a class name to the all the delete buttons to style all the delete buttons
     deleteButton.className = "delete_button";
 
     //Set the onclick function for the edit button
@@ -138,33 +138,61 @@ function createDeleteButton(memeId) {
     document.getElementById(memeId).appendChild(deleteButton);
 }
 
-function createDownloadButton(memeId){
+// The function createDownloadButton creates a download button that will be added to each meme
+function createDownloadButton(memeId) {
+    //Create an img element for the picture for the button
     var imgLayer = document.createElement("img");
+
+    //Add the download image to the img element
     imgLayer.src = "download.png";
+
+    //Give a class name to the all the download buttons to style all the download buttons
     imgLayer.className = "download_button";
+
+    //Create an a element that will allow the user to download the image
     var downloadButton = document.createElement("a");
-    var childNodes = document.getElementById(memeId).children;
+
+    //Set the name of the file that will show when the user downloads the meme
     downloadButton.download = "myMeme-" + memeId;
+
+    //Get the children of the li element for this meme
+    var childNodes = document.getElementById(memeId).children;
+
+    //Set the link of the button to the meme
     downloadButton.href = childNodes[0].src;
-    document.getElementById(memeId).appendChild(downloadButton);
+
+    //Add the button image to the a element and add the download button to the li element
     downloadButton.appendChild(imgLayer);
+    document.getElementById(memeId).appendChild(downloadButton);
 }
 
+// The function createShareButton creates a share button that will be added to all the memes
 function createShareButton(memeId) {
-
+    //Create an img element for the picture for the button
     var shareButton = document.createElement("img");
+
+    //Add the share button image to the img element
     shareButton.src = "link.png";
+
+    //Give a class name to the all the share buttons to style all the share buttons
     shareButton.className = "share_button";
+
+    //Set the onclick function for the share button
     shareButton.onclick = function () {
+        //Get the URL of the meme
         var text = document.getElementById(`${memeId}`).childNodes[0].src;
+
+        //Try copying the URL to the clipboard
         navigator.clipboard.writeText(text).then(function () {
-            /* clipboard successfully set */
+            //Let the user know the URL was successfully added to the clipboard
             alert("Link saved to clipboard!");
         }, function () {
-            /* clipboard write failed */
+            //Let the user know the copy failed
             alert("Error occurred!");
         });
     }
+
+    //Add the share button to the li element
     document.getElementById(memeId).appendChild(shareButton);
 }
 
@@ -305,21 +333,27 @@ function handleImage(e) {
 // The function handleUrlImage reads the image file that the user wants to use (from a URL)
 function handleUrlImage() {
     var img = new Image();
+
     //Ask the user for the URL of the image
     img.src = prompt("Input the URL of an image:");
-    // The URL isn't valid or the resource isn't a picture
-    img.onerror = function() { alert("Provided URL does not point to a valid picture.") };
-    // Ok, we have correct picture; display it
+
+    //Let the user know that the URL is not a valid URL for an image
+    img.onerror = function () { alert("Provided URL does not point to a valid picture.") };
+
+    //If an image was found update the canvas
     img.onload = function() {
         var topText = document.getElementById("topText").value;
-            var bottomText = document.getElementById("bottomText").value;
-            var fontSize = document.getElementById("fontSize").value;
-            var fontFamily = document.getElementById("fontFamily").value;
-            showCanvas(topText, bottomText, img, fontSize, fontFamily);
+        var bottomText = document.getElementById("bottomText").value;
+        var fontSize = document.getElementById("fontSize").value;
+        var fontFamily = document.getElementById("fontFamily").value;
+        showCanvas(topText, bottomText, img, fontSize, fontFamily);
     }
+
+    //Set the img element's source to the new image
     document.getElementById("img1").src = img.src;
 }
 
+// The function applyChanges gets the meme information provided by the user and updates the canvas
 function applyChanges() {
     var topText = document.getElementById("topText").value;
     var bottomText = document.getElementById("bottomText").value;
@@ -328,17 +362,22 @@ function applyChanges() {
     showCanvas(topText, bottomText, document.getElementById("img1"), fontSize, fontFamily);
 };
 
+// The function saveMeme attempts to save the meme to the database
 function saveMeme() {
+    //Get the meme data as provided by the user
     var topText = document.getElementById("topText").value;
     var bottomText = document.getElementById("bottomText").value;
     var fontSize = document.getElementById("fontSize").value;
     var fontFamily = document.getElementById("fontFamily").value;
     var imgSrc = document.getElementById("img1").src;
 
+    //Call applyChanges to make the changes in canvas
     applyChanges();
 
+    //Save the canvas image's URL
     var memeSrc = document.getElementById("memeCanvas").toDataURL();
 
+    //Make a JSON object for the meme data
     var meme = {
         topText: topText,
         bottomText: bottomText,
@@ -348,45 +387,60 @@ function saveMeme() {
         memeSrc: memeSrc
     };
 
+    //Get the user's memes from Firebase
     var database = firebase.database();
     var user = firebase.auth().currentUser;
     var ref = database.ref(user.uid);
 
+    //If the user is adding a new meme push the new meme
     if (sessionStorage.getItem("index") == "-1") {
         ref.push(meme, function (error) {
+            //Let the user know of the error that occurred
             if (error) {
                 alert(error);
             }
+
+            //Let the user know their meme was saved successfully and redirect them to their read page
             else {
                 alert("Meme Saved!");
                 window.location = "read.html";
             }
         });
     }
+
+    //If the user is editing an existing meme call updateMeme
     else {
         ref.once('value', function (data) { updateMeme(meme,data); }, errData);
     }
-
 }
 
+// The function updateMeme updates the meme in Firebase with the edits that the user made
 function updateMeme(meme, data) {
+    //Get the index of the image the user edited
     var index = sessionStorage.getItem("index");
     index = parseInt(index);
 
     var counter = 1;
     for (var key2 in data.val()) {
         if (counter == index) {
+            //If the meme was found, get the user's UID
             var user = firebase.auth().currentUser;
+
+            //Update the meme data with the edits
             firebase.database().ref(user.uid).child(key2).update(meme, function (error) {
+                //Let the user know of the error that occurred
                 if (error) {
                     alert(error);
                 }
+
+                //Let the user know their edits were saved
                 else {
-                    console.log("whyyyy");
                     alert("Meme Saved!");
                     window.location = "read.html";
                 }
             });
+
+            //Once the correct meme has been edited we do not need to continue searching the database
             break;
         }
         counter++;
@@ -394,22 +448,27 @@ function updateMeme(meme, data) {
 }
 
 // Function for My Account page
+// The function changePassword uses a Firebase function to attempt to change the user's password
 function changePassword(oldPass, newPass) {
+    //Get the current logged in user
     var user = firebase.auth().currentUser;
+
+    //If it has been a while, the Firebase needs the user's credentials so get the user's credentials
     var credential = firebase.auth.EmailAuthProvider.credential(user.email, oldPass);
 
+    //Provide the user's credentials to Firebase
     user.reauthenticateAndRetrieveDataWithCredential(credential).then(function () {
         // User re-authenticated.
         user.updatePassword(newPass).then(function () {
-            // Update successful.
+            //Let the user know their password was changed and redirect them to their read page
             alert("Password changed successfully!");
             window.location = "read.html";
         }).catch(function (error) {
-            // An error happened.
+            //Let the user know of the error that occurred from attempting a password change
             document.getElementById("error").innerHTML = error;
         });
     }).catch(function (error) {
-        // An error happened.
+        //Let the user know of the error that occurred from reauthentication
         document.getElementById("error").innerHTML = error;
     });
 }

@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <!--<base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />-->
+    <base href="https://cse-134b-final-project.firebaseapp.com" target="_self" />
     <title>MemeMaster</title>
 
     <!-- Link the external CSS file -->
@@ -11,10 +11,9 @@
 
     <!-- Define CSS for styling specific to this page -->
     <style>
-        /* Styling for Create Account button */
+        /* Make space between the form and the Create Account button */
         button {
             margin-top: 10px;
-            margin-left: 50%;
         }
     </style>
 </head>
@@ -25,13 +24,10 @@
         <a href="login.html">MemeMaster</a>
     </h1>
 
-    <br />
-
     <div class="memecontainer">
-
         <h3>Sign Up</h3>
 
-        <div class="">
+        <div class="boxed">
             <form>
                 <!-- Form for user's account information-->
                 <label>Email:</label>
@@ -80,3 +76,9 @@
         window.location = "login.html";
     }
 </script>
+
+<!-- Alert the user if they do not have JavaScript on their browser -->
+<noscript>
+    alert("Your browser does not support JavaScript!");
+    window.location = "login.html";
+</noscript>

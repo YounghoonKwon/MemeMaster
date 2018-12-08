@@ -1,76 +1,90 @@
-
-/* Add some design to the MemeMaster header */
-body{
+/* Styling for the body of all pages*/
+body {
     background-color: #ccc;
     font-family: arial;
 }
-.memecontainer{
-    background:#fff;
-    list-style-type: none;
-    padding: 10px;
-    width:300px;
-    margin:auto;
-    position:relative;
-}
-.memecontainer:after {
-  background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
-  position: absolute;
-  content: '';
-  height: 4px;
-  right: 0;
-  left: 0;
-  top: 0;
-}
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.container {
+/* Format the grid for the web app's logo and redirect buttons */
+header {
     display: grid;
     grid-template-columns: [col1-start] 75% [col2-start] auto;
     grid-column-gap: 10px;
 }
 
-.sign_form {
+/* Style the web app's logo */
+h1 {
+    grid-column-start: col1-start;
+    color: #111;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 75px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-align: left;
+    margin: unset;
+}
+
+/* Remove the line under the a element */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Format the redirect buttons to be on the top right corner of the page */
+.redirect_buttons {
+    grid-column-start: col2-start;
     margin: auto;
 }
-h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 75px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: left; }
-h3{
+
+/* Styling for the boxes around the forms and the images */
+.memecontainer {
+    text-align: center;
+    background: #fff;
+    list-style-type: none;
+    padding: 10px;
+    width: 300px;
+    margin: auto;
+    margin-top: 25px;
+    position: relative;
+}
+
+.memecontainer:after {
+    background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
+    position: absolute;
+    content: '';
+    height: 4px;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+/* Center the error message text */
+.err_spacing {
     text-align: center;
 }
 
-p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+/* Styling for the output message */
+output {
+    color: red;
+    font-size: medium;
+    font-weight: bold;
+}
 
+/* Styling for the forms */
 .boxed {
     padding: 10px;
     width: 260px;
     margin: auto;
+    text-align: right;
 }
 
-label {
-    margin:auto;
-
-}
-
+/* Make space between the inputs in the forms */
 input {
     margin: 1px;
     padding:2px;
-
-}
-.formInput{
-    width:100px;
-    padding:5px;
-    margin:5px;
 }
 
-.inside_form{
-    float:left;
-    position:relative;
-    margin:3px;
-}
-
+/* Styling for all of the buttons */
 .blue_button {
     background-color: #1a73e8;
     border-style: none;
@@ -79,8 +93,4 @@ input {
     padding: 10px;
     height: 40px;
 
-}
-.passInput{
-    margin:5px;
-    width:130px;
 }
