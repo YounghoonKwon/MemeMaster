@@ -1,15 +1,17 @@
+/* Styling for the body of all pages*/
 body {
     background-color: #ccc;
     font-family: arial;
 }
 
-/* Add some design to the MemeMaster header */
+/* Format the grid for the web app's logo and redirect buttons */
 header {
     display: grid;
     grid-template-columns: [col1-start] 75% [col2-start] auto;
     grid-column-gap: 10px;
 }
 
+/* Style the web app's logo */
 h1 {
     grid-column-start: col1-start;
     color: #111;
@@ -22,26 +24,53 @@ h1 {
     margin: unset;
 }
 
+/* Remove the line under the a element */
 a {
     text-decoration: none;
     color: inherit;
 }
 
+/* Format the redirect buttons to be on the top right corner of the page */
 .redirect_buttons {
     grid-column-start: col2-start;
     margin: auto;
 }
 
+/* Styling for the boxes around the forms and the images */
+.memecontainer {
+    text-align: center;
+    background: #fff;
+    list-style-type: none;
+    padding: 10px;
+    width: 300px;
+    margin: auto;
+    margin-top: 25px;
+    position: relative;
+}
+
+.memecontainer:after {
+    background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
+    position: absolute;
+    content: '';
+    height: 4px;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+/* Center the error message text */
 .err_spacing {
     text-align: center;
 }
 
+/* Styling for the output message */
 output {
     color: red;
     font-size: medium;
     font-weight: bold;
 }
 
+/* Styling for the forms */
 .boxed {
     padding: 10px;
     width: 260px;
@@ -49,65 +78,13 @@ output {
     text-align: right;
 }
 
-
-
-
-
-
-
-
-
-
-
-.memecontainer{
-    background:#fff;
-    list-style-type: none;
-    padding: 10px;
-    width:300px;
-    margin:auto;
-    margin-top: 25px;
-    position:relative;
-}
-.memecontainer:after {
-  background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
-  position: absolute;
-  content: '';
-  height: 4px;
-  right: 0;
-  left: 0;
-  top: 0;
-}
-
-
-
-
-
-.sign_form {
-    margin: auto;
-}
-
-
-
-h3{
-    text-align: center;
-}
-
-/*
-p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
-*/
-
+/* Make space between the inputs in the forms */
 input {
     margin: 1px;
     padding:2px;
-
 }
 
-.inside_form{
-    float:left;
-    position:relative;
-    margin:3px;
-}
-
+/* Styling for all of the buttons */
 .blue_button {
     background-color: #1a73e8;
     border-style: none;
