@@ -12,9 +12,23 @@
         label {
             width: 100px;
         }
-
-        #meme_form {
-            width: 380px;
+        #meme_form{
+            background:#fff;
+            list-style-type: none;
+            padding: 10px;
+            width:300px;
+            margin:auto;
+            position:relative;
+            opacity: 0.9;
+        }
+        #meme_form:after {
+          background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
+          position: absolute;
+          content: '';
+          height: 4px;
+          right: 0;
+          left: 0;
+          top: 0;
         }
 
         #meme_button {
@@ -45,27 +59,29 @@
     <br />
 
     <main>
-        <canvas id="memeCanvas" width="300" height="300" style="border:1px solid"></canvas>
-        <img id="img1" style="display: none" src="defaultimage.png" />
+        <div class="memecontainer">
+            <canvas id="memeCanvas" width="300" height="300" align="center"></canvas>
+            <img id="img1" style="display: none" src="defaultimage.png" />
+        </div>
+        
 
-        <div id="meme_form" class="boxed">
-            <input type="file" id="imageLoader" name="imageLoader" />
-            <input type='button' onclick="handleUrlImage(this);" value="Input Image URL" />
-
-            <br />
-
+        <div id="meme_form" class="memecontainer">
+            <input type="file" class="inside_form" id="imageLoader" name="imageLoader" />
+            <input type='button' class="inside_form" onclick="handleUrlImage(this);" value="Input Image URL" />
+            <br>
+            <br>
+            <br>
+            <br>
             <label>Top:</label>
-            <input type="text" id="topText" value="Add Text">
-
+            <input class="formInput" type="text" id="topText" value="Add Text">
             <br />
 
             <label>Bottom:</label>
-            <input type="text" id="bottomText" value="Here">
-
+            <input class="formInput" type="text" id="bottomText" value="Here">
             <br />
 
             <label>Font Family:</label>
-            <select id="fontFamily">
+            <select class="formInput" id="fontFamily">
                 <option value="Impact">Impact</option>
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Times">Times</option>
@@ -77,9 +93,7 @@
 
             <br />
             <label>Font Size:</label>
-            <input type="text" id="fontSize" value="30"><br>
-
-
+            <input class="formInput" type="text" id="fontSize" value="30"><br>
             <div id="meme_button">
                 <button id="apply" class="blue_button">Apply Changes</button>
                 <button id="save" class="blue_button">Save Meme</button>

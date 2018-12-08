@@ -1,69 +1,74 @@
-/* Define the grid for the items in the header */
-header {
+
+/* Add some design to the MemeMaster header */
+body{
+    background-color: #ccc;
+    font-family: arial;
+}
+.memecontainer{
+    background:#fff;
+    list-style-type: none;
+    padding: 10px;
+    width:300px;
+    margin:auto;
+    position:relative;
+}
+.memecontainer:after {
+  background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
+  position: absolute;
+  content: '';
+  height: 4px;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
     display: grid;
     grid-template-columns: [col1-start] 75% [col2-start] auto;
     grid-column-gap: 10px;
 }
 
-/* Add some design to the MemeMaster header */
-h1 {
-    grid-column-start: col1-start;
-    color: #EEE;
-    text-shadow: 4px 4px 1px #300000;
-    4px 6px 1px #400000;
-    4px 8px 1px #500000;
-    4px 60px 5px #FF0000;
-}
-
-/* Define styling for the buttons in the header */
-.redirect_buttons {
-    grid-column-start: col2-start;
-    margin: auto;
-}
-
-/* Align the error message to the center of the page */
-.err_spacing {
-    text-align: center;
-    margin: 10px;
-}
-
-/* Make the error message bold and red */
-output {
-    font-weight: bold;
-    color: red;
-    font-size: medium;
-}
-
-a {
-    text-decoration: none;
-}
-
-
-
 .sign_form {
     margin: auto;
 }
-
-h3 {
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 75px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: left; }
+h3{
     text-align: center;
 }
 
+p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+
 .boxed {
     padding: 10px;
-    border-style: solid;
     width: 260px;
     margin: auto;
 }
 
 label {
-    display: inline-grid;
-    width: 70px;
-    text-align: right;
+    margin:auto;
+
 }
 
 input {
-    margin-top: 7px;
-    margin-bottom: 7px;
+    margin: 1px;
+    padding:2px;
+
+}
+.formInput{
+    width:100px;
+    padding:5px;
+    margin:5px;
+}
+
+.inside_form{
+    float:left;
+    position:relative;
+    margin:3px;
 }
 
 .blue_button {
@@ -73,4 +78,9 @@ input {
     color: white;
     padding: 10px;
     height: 40px;
+
+}
+.passInput{
+    margin:5px;
+    width:130px;
 }

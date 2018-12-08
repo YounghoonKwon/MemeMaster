@@ -11,7 +11,18 @@
 
     <!-- Define CSS for styling specific to this page -->
     <style>
-        /* Make the Log In button right aligned */
+
+        h1 {
+            grid-column-start: col1-start;
+        }
+
+        #sign_up {
+            grid-column-start: col2-start;
+            width: 140px;
+            height: 40px;
+            margin: auto;
+            margin-left: 50%;
+        }
         #login {
             margin-top: 10px;
             margin-left: 70%;
@@ -20,38 +31,36 @@
 </head>
 
 <body>
-    <header>
+    <div class="container">
         <h1>
             <!-- When the logo is clicked, the user is redirected to the Log In page -->
             <a href="login.html">MemeMaster</a>
         </h1>
-
-        <div class="redirect_buttons">
-            <!-- When the Create An Account button is clicked, the user is redirected to the account creation page -->
-            <button id="sign_up" class="blue_button">Create An Account</button>
-        </div>
-    </header>
-
-    <h3>Sign In</h3>
-
-    <!-- If an error occurs when the user tries to log in, the error message will be in the output element -->
-    <div class="err_spacing">
-        <output id="error"></output>
+        <!-- When the sign up button is pressed, the user is redirected to the account creation page -->
+        <button id="sign_up" class="blue_button">Create An Account</button>
     </div>
 
-    <div class="boxed">
-        <!-- Form for user's login information-->
-        <form>
-            <label>Email:</label>
-            <input id="user_email" type="text" />
+    <div class="memecontainer">
+        <h3>Sign In</h3>
+    <!-- If an error occurs when the user tries to log in, the error message will be in the output element -->
+        <div class="err_spacing">
+            <output id="error"></output>
+        </div>
 
-            <label>Password:</label>
-            <input id="user_pass" type="password" />
-        </form>
+        <div class="boxed">
+            <!-- Form for user's login information-->
+            <form>
+                <label>Email:</label>
+                <input id="user_email" type="text" />
 
-        <!-- When the login button is pressed, the user is redirected to
-        their read page if they inputted the correct login information -->
-        <button id="login" class="blue_button">Log In</button>
+                <label>Password:</label>
+                <input id="user_pass" type="password" />
+            </form>
+
+            <!-- When the login button is pressed, the user is redirected to
+            their read page if they inputted the correct login information -->
+            <button id="login" class="blue_button">Log In</button>
+        </div>
     </div>
 </body>
 </html>
