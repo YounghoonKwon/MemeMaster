@@ -27,6 +27,11 @@
     <div class="memecontainer">
         <h3>Sign Up</h3>
 
+        <!-- If an error occurs when the user tries to make an account, the error message will be in the output element -->
+        <div class="err_spacing">
+            <output id="error"></output>
+        </div>
+
         <div class="boxed">
             <form>
                 <!-- Form for user's account information-->
@@ -66,14 +71,11 @@
 <script type="text/javascript">
     document.getElementById("create_account").onclick = function () {
         //Get the email and password that the user inputted
-        email = document.getElementById("new_email").value;
-        password = document.getElementById("new_password").value;
+        var email = document.getElementById("new_email").value;
+        var password = document.getElementById("new_password").value;
 
         //Create a new account using Firebase's create account function
         newAccount(email, password);
-
-        //Go to the login page
-        window.location = "login.html";
     }
 </script>
 

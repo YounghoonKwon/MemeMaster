@@ -48,15 +48,15 @@ a {
     position: relative;
 }
 
-.memecontainer:after {
-    background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
-    position: absolute;
-    content: '';
-    height: 4px;
-    right: 0;
-    left: 0;
-    top: 0;
-}
+    .memecontainer:after {
+        background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #e84f47 50%, #e84f47 75%, #65c1ac 75%);
+        position: absolute;
+        content: '';
+        height: 4px;
+        right: 0;
+        left: 0;
+        top: 0;
+    }
 
 /* Center the error message text */
 .err_spacing {
@@ -81,7 +81,7 @@ output {
 /* Make space between the inputs in the forms */
 input {
     margin: 1px;
-    padding:2px;
+    padding: 2px;
 }
 
 /* Styling for all of the buttons */
@@ -92,5 +92,4 @@ input {
     color: white;
     padding: 10px;
     height: 40px;
-
 }

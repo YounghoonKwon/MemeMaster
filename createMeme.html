@@ -17,9 +17,15 @@
 
         /* Styling to make the labels and inputs of the form aligned */
         form {
-            width: 270px;
+            width: 320px;
             text-align: right;
             display: inline-block;
+        }
+
+        /* Styling to make the labels aligned */
+        label {
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
         /* Styling to make the select dropdown as wide as the input elements */
@@ -69,6 +75,9 @@
 
             <form>
                 <!-- Form for the meme's data -->
+                <label>Title</label>
+                <input type="text" id="title" value="new_meme"/>
+
                 <label>Top:</label>
                 <input type="text" id="topText" value="Add Text">
 
