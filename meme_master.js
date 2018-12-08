@@ -1,7 +1,11 @@
 // Function for making a new account
 // The function newAccount uses a Firebase function to create a new account
 function newAccount(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
+        //Let the user know the account was created and redirect them to their read page
+        alert("Account Created!");
+        window.location = "read.html";
+    }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
 
@@ -9,7 +13,7 @@ function newAccount(email, password) {
         console.log(errorCode);
 
         //Let the user know of the error
-        alert(errorMessage);
+        document.getElementById("error").innerHTML = errorMessage;
     });
 }
 
@@ -52,17 +56,22 @@ function gotData(data) {
     //For all of the user's memes
     for (var key2 in data.val()[UID]) {
 
-        //Create an li and img element
+        //Create an li, img, and a p element
         var li = document.createElement("li");
         var img = document.createElement("img");
+        var p = document.createElement("p");
 
         //Set the source of the image to be the flattened meme saved in the database
         img.src = data.val()[UID][key2]["memeSrc"];
 
-      //Set the ID of the li to be the number of memes retrieved so far and add the meme image as a child
-        li.className = "memecontainer"
+        //Set the inner HTML of the p element to be the title of the meme
+        p.innerHTML = data.val()[UID][key2]["title"];
+
+        //Set the ID of the li to be the number of memes retrieved so far and add the meme image and title as a child
+        li.className = "memecontainer";
         li.id = counter;
         li.appendChild(img);
+        li.appendChild(p);
 
         //Add the li element to the current list of memes(ul)
         document.getElementById("memeList").appendChild(li);
@@ -152,11 +161,11 @@ function createDownloadButton(memeId) {
     //Create an a element that will allow the user to download the image
     var downloadButton = document.createElement("a");
 
-    //Set the name of the file that will show when the user downloads the meme
-    downloadButton.download = "myMeme-" + memeId;
-
     //Get the children of the li element for this meme
     var childNodes = document.getElementById(memeId).children;
+
+    //Set the name of the file that will show when the user downloads the meme
+    downloadButton.download = childNodes[1].innerHTML;
 
     //Set the link of the button to the meme
     downloadButton.href = childNodes[0].src;
@@ -180,7 +189,7 @@ function createShareButton(memeId) {
     //Set the onclick function for the share button
     shareButton.onclick = function () {
         //Get the URL of the meme
-        var text = document.getElementById(`${memeId}`).childNodes[0].src;
+        var text = document.getElementById(memeId.toString()).childNodes[0].src;
 
         //Try copying the URL to the clipboard
         navigator.clipboard.writeText(text).then(function () {
@@ -273,6 +282,7 @@ function canvasData(data) {
     for (var key2 in data.val()[UID]) {
         //If the correct meme is found, display the meme data on the page and call applyChanges to update the canvas
         if (counter == index) {
+            document.getElementById("title").value = data.val()[UID][key2]["title"];
             document.getElementById("topText").value = data.val()[UID][key2]["topText"];
             document.getElementById("bottomText").value = data.val()[UID][key2]["bottomText"];
             document.getElementById("fontSize").value = data.val()[UID][key2]["fontSize"];
@@ -365,6 +375,7 @@ function applyChanges() {
 // The function saveMeme attempts to save the meme to the database
 function saveMeme() {
     //Get the meme data as provided by the user
+    var title = document.getElementById("title").value;
     var topText = document.getElementById("topText").value;
     var bottomText = document.getElementById("bottomText").value;
     var fontSize = document.getElementById("fontSize").value;
@@ -377,14 +388,23 @@ function saveMeme() {
     //Save the canvas image's URL
     var memeSrc = document.getElementById("memeCanvas").toDataURL();
 
+    //Get the current date to save the date modified
+    var dateObj = new Date();
+    var date = dateObj.getDate();
+    var month = dateObj.getMonth();
+    var year = dateObj.getFullYear();
+    var today = month + "/" + date + "/" + year;
+
     //Make a JSON object for the meme data
     var meme = {
+        title: title,
         topText: topText,
         bottomText: bottomText,
         fontSize: fontSize,
         fontFamily: fontFamily,
         imgSrc: imgSrc,
-        memeSrc: memeSrc
+        memeSrc: memeSrc,
+        date: today
     };
 
     //Get the user's memes from Firebase

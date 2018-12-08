@@ -54,7 +54,7 @@
         <div class="memecontainer">
             <!-- The canvas element shows the meme and the img element holds the image for the meme -->
             <canvas id="memeCanvas" width="300" height="300" align="center"></canvas>
-            <img id="img1" style="display: none" src="defaultimage.png" />
+            <img id="img1" style="display: none" src="defaultimage.jpeg" />
         </div>
 
         <div id="meme_form" class="memecontainer">
@@ -69,6 +69,9 @@
 
             <form>
                 <!-- Form for the meme's data -->
+                <label>Title</label>
+                <input type="text" id="title" value="new_meme"/>
+
                 <label>Top:</label>
                 <input type="text" id="topText" value="Add Text">
 
