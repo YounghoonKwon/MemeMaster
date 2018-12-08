@@ -1,3 +1,44 @@
+header {
+    display: grid;
+    grid-template-columns: [col1-start] 75% [col2-start] auto;
+    grid-column-gap: 10px;
+}
+
+h1 {
+    grid-column-start: col1-start;
+    color: #111;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 75px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-align: left;
+    margin: unset;
+}
+
+.redirect_buttons {
+    grid-column-start: col2-start;
+    margin: auto;
+}
+
+.err_spacing {
+    text-align: center;
+}
+
+output {
+    color: red;
+    font-size: medium;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
 
 /* Add some design to the MemeMaster header */
 body{
@@ -10,6 +51,7 @@ body{
     padding: 10px;
     width:300px;
     margin:auto;
+    margin-top: 25px;
     position:relative;
 }
 .memecontainer:after {
@@ -27,16 +69,14 @@ a {
     color: inherit;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: [col1-start] 75% [col2-start] auto;
-    grid-column-gap: 10px;
-}
+
 
 .sign_form {
     margin: auto;
 }
-h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 75px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: left; }
+
+
+
 h3{
     text-align: center;
 }
@@ -47,6 +87,7 @@ p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; 
     padding: 10px;
     width: 260px;
     margin: auto;
+    text-align: right;
 }
 
 label {
@@ -84,3 +125,4 @@ input {
     margin:5px;
     width:130px;
 }
+
